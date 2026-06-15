@@ -1,6 +1,12 @@
-# Yu-Jui's Portfolio — AI × CRM × 業務自動化
+# 曾于芮 Resa Tseng — Portfolio
 
-以 Python 與 LLM 建構企業業務智慧化系統，從資料萃取、AI 分析到自動化輸出的完整解決方案。
+**資料科學家** | 鼎新數智股份有限公司（2025/09 ~ Present）
+
+數理統計碩士，8 年資料科學經驗。專注以 Python 與 LLM（Google Cloud Vertex AI、Claude API、Gemini API）建構企業業務智慧化系統，從 CRM 資料萃取、AI 痛點分析，到業務話術自動生成的端到端解決方案。
+
+📧 **聯絡**：[yujuit@gmail.com](mailto:yujuit@gmail.com)
+
+---
 
 ## 🌐 作品集首頁
 
@@ -19,4 +25,4 @@
 
 ## 🛠 主要技術
 
-`Python` `Gemini 2.5 Pro/Flash` `Vertex AI` `FastAPI` `Streamlit` `SQL Server` `Scikit-learn` `Plotly` `Selenium` `GitHub Pages`
+`Python` `Google Cloud` `Vertex AI` `Claude API` `Gemini 2.5 Pro/Flash` `FastAPI` `Streamlit` `SQL Server` `Scikit-learn` `Plotly` `Selenium` `GitHub Pages`
