@@ -4,7 +4,7 @@
 
 專注將 LLM 落地為 production 系統，服務 B2B 業務團隊的情報分析與自動化決策。以 Python 與 Google Cloud Vertex AI、Claude API、Gemini API 建構企業業務智慧化系統。
 
-📧 **聯絡**：[yujuit@gmail.com](mailto:yujuit@gmail.com) ｜ [LinkedIn](https://www.linkedin.com/in/yujuit)
+📧 **聯絡**：[yujuit@gmail.com](mailto:yujuit@gmail.com) ｜ [LinkedIn](https://www.linkedin.com/in/%E4%BA%8E%E8%8A%AE-%E6%9B%BE-48a6a1117/)
 
 ---
 
