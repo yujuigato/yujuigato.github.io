@@ -1,10 +1,10 @@
 # 曾于芮 Resa Tseng — Portfolio
 
-**資料科學家** | 鼎新數智股份有限公司（2025/09 ~ Present）
+**資料科學家** | B2B IT 產業 · 台灣
 
-淡江大學數學碩士。專注以 Python 與 LLM（Google Cloud Vertex AI、Claude API、Gemini API）建構企業業務智慧化系統，從 CRM 資料萃取、AI 痛點分析，到業務話術自動生成的端到端解決方案。
+專注將 LLM 落地為 production 系統，服務 B2B 業務團隊的情報分析與自動化決策。以 Python 與 Google Cloud Vertex AI、Claude API、Gemini API 建構企業業務智慧化系統。
 
-📧 **聯絡**：[yujuit@gmail.com](mailto:yujuit@gmail.com)
+📧 **聯絡**：[yujuit@gmail.com](mailto:yujuit@gmail.com) ｜ [LinkedIn](https://www.linkedin.com/in/yujuit)
 
 ---
 
