@@ -259,15 +259,16 @@
       <div class="exp-date">2025/09 ~ Present</div>
     </div>
     <ul>
-      <li>開發業務日誌智慧萃取系統，LLM 四階段管道（Gemini 2.5 Flash）自動分析 17 萬筆業務日誌，萃取 L1–L7 七層企業痛點情報，生成業務作戰地圖</li>
-      <li>建構 AiGP 卡關商機分析系統，每日自動分析 ~220 筆 CRM 商機，Gemini 2.5 Pro 並行生成個人化業務話術，卡關識別率達 97%</li>
-      <li>開發內容自動標籤系統（LLM + 關鍵字字典混合引擎），FastAPI 提供即時分類服務</li>
-      <li>建立高價值客戶商機推薦系統，五維度加權評分，Lift 曲線驗證成效</li>
-      <li>開發 CRM 智慧查詢儀表板（Streamlit）與 Google Trends 商業環境監測儀表板</li>
+      <li>開發業務日誌智慧萃取系統，以 LLM 四階段管道（Gemini 2.5 Flash, Vertex AI）自動分析 17 萬筆業務日誌，萃取 L1–L7 七層企業客戶痛點與需求情報，以 ML 聚類識別法人類型，生成可行動的業務作戰地圖</li>
+      <li>建構 AiGP 卡關商機分析系統，每日自動分析約 220 筆 CRM 卡關商機，以 Gemini 2.5 Pro 並行生成個人化業務話術與活動邀約推薦，卡關商機識別率達 97%</li>
+      <li>開發內容自動標籤系統，結合 Gemini LLM 語意判斷與關鍵字字典，對中文文章自動生成場景、議題、產品三層標籤，透過 FastAPI 提供即時分類服務</li>
+      <li>建立高價值客戶商機推薦系統，自 CRM 識別有互動但尚未建立商機的潛在客戶，設計五維度加權評分，以 Lift 曲線驗證推薦成效</li>
+      <li>開發 CRM 智慧查詢儀表板（Streamlit），使業務主管無需 SQL 即可秒級查詢、多維度篩選與一鍵匯出 CSV / Excel 報表</li>
+      <li>建置 Google Trends 商業環境監測儀表板，每週自動爬取台灣商業熱搜，依 10 大主題聚合分析趨勢方向，成果發布至 GitHub Pages</li>
     </ul>
     <div class="exp-tags">
-      <span>Gemini AI</span><span>Vertex AI</span><span>Claude API</span>
-      <span>Python</span><span>FastAPI</span><span>SQL Server</span><span>Prompt Engineering</span>
+      <span>Gemini 2.5 Pro/Flash</span><span>Vertex AI</span><span>Claude API</span>
+      <span>Python</span><span>FastAPI</span><span>Streamlit</span><span>SQL Server</span><span>Scikit-learn</span>
     </div>
   </div>
 
@@ -280,12 +281,13 @@
       <div class="exp-date">2022/07 ~ 2025/06</div>
     </div>
     <ul>
-      <li>帳單分期預測模型（CatBoost），月觸達 35 萬封 SMS，轉換率提升 1%+</li>
-      <li>因果推論分析（PS Matching、GRF、Logistic Regression），量化特定商品對客戶行為影響</li>
-      <li>RFM 客戶分群（K-means、DBSCAN）識別高潛力客群並提出行銷建議</li>
+      <li>帳單分期預測模型（CatBoost）：每月接觸客群從 17 萬降至 7 萬，抓到 90%+ 承做客群，降低 88% SMS 成本</li>
+      <li>因果推論（PS Matching、GRF、Logistic Regression）：證明特店分期與高收益產品呈負相關，提供經費預算編列參考</li>
+      <li>RFM 客戶分群（K-means、DBSCAN）：追蹤循環戶 QoQ 移動狀況，識別待喚醒客群並標記接觸策略</li>
+      <li>客戶消費分類標籤（BERT 相似度比較）：自信用卡交易自動辨識消費類型，支援多標籤輸出</li>
     </ul>
     <div class="exp-tags">
-      <span>Python</span><span>CatBoost</span><span>Scikit-learn</span><span>SQL Server</span><span>Causal Inference</span>
+      <span>Python</span><span>CatBoost</span><span>BERT</span><span>Scikit-learn</span><span>SQL Server</span><span>Causal Inference</span>
     </div>
   </div>
 
@@ -298,11 +300,13 @@
       <div class="exp-date">2021/07 ~ 2022/06</div>
     </div>
     <ul>
-      <li>建構 Content-based 職缺推薦系統（TF-IDF cosine similarity），整合多路訊號優化排序</li>
-      <li>開發職缺特徵萃取與名稱分類模組（TF-IDF + SSE 最佳化 K 值）</li>
+      <li>職缺推薦系統（content-based, jieba 斷詞 + TF-IDF + cosine similarity）：從 300 萬筆職缺為求職者推薦相似職缺，導入 AWS LSHForest 進行雲端壓力測試</li>
+      <li>社群文章曝光排序公式：參考 Hacker News / StackOverflow 設計公司社群特有排序機制</li>
+      <li>職缺特徵分析（PCA、K-means）：從 600 多筆職缺找出關鍵特徵因子，提供配對欄位建議</li>
+      <li>職缺名稱分類（TF-IDF + SSE 最佳化 K 值）：分析最受歡迎產業 / 職缺，產出文字雲</li>
     </ul>
     <div class="exp-tags">
-      <span>Python</span><span>NLP</span><span>Recommender System</span><span>TF-IDF</span>
+      <span>Python</span><span>NLP</span><span>TF-IDF</span><span>Recommender System</span><span>PCA</span><span>AWS</span>
     </div>
   </div>
 
@@ -315,10 +319,10 @@
       <div class="exp-date">2020/01 ~ 2020/09</div>
     </div>
     <ul>
-      <li>非參數統計檢定（Kruskal-Wallis、Wilcoxon）識別生化因子與臨床指標相關性</li>
+      <li>中風因子預測模型：無母數分析（Kruskal-Wallis Test、Wilcoxon signed test、Friedman's test）視覺化，發現數個生化因子在中風前即有明顯偏離正常值</li>
     </ul>
     <div class="exp-tags">
-      <span>R</span><span>Statistics</span><span>Non-parametric Test</span>
+      <span>R</span><span>Non-parametric Test</span><span>Statistical Analysis</span>
     </div>
   </div>
 
@@ -331,10 +335,11 @@
       <div class="exp-date">2018/06 ~ 2019/12</div>
     </div>
     <ul>
-      <li>心理量表統計分析，研究成果獲 2019 年台灣心理學年會錄取，入選 12 月字詞學習實驗研究</li>
+      <li>失智症回顧研究：無母數分析、多元邏輯式迴歸、ROC 分析建立切點，評估病患狀態以利早期治療</li>
+      <li>2019 年心理師研討會發表：12 項字彙學習測驗篩選輕度認知障礙與失智症之效用</li>
     </ul>
     <div class="exp-tags">
-      <span>R</span><span>Statistics</span><span>Psychology Research</span>
+      <span>R</span><span>Logistic Regression</span><span>ROC Analysis</span><span>Non-parametric Test</span>
     </div>
   </div>
 
