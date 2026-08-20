@@ -21,7 +21,7 @@
 | AI Content Auto-Labeling | LLM + 關鍵字混合引擎自動為文章打三層標籤 | [查看](https://yujuigato.github.io/content-auto-labeling/) |
 | Opportunity Recommender | 五維度評分識別高價值潛在客戶 | [查看](https://yujuigato.github.io/customer-opportunity-scorer/) |
 | Streamlit CRM Dashboard | 零 SQL 業務自助查詢儀表板 | [查看](https://yujuigato.github.io/crm-dashboard/) |
-| Google Trends Dashboard | 每週自動爬取商業熱搜，10 大主題監測 | [查看](https://yujuigato.github.io/google-trends-dashboard/) |
+| 業務情報看板群 | 商業熱搜／競品負面新聞／法規商機，三合一自動監測看板 | [查看](https://yujuigato.github.io/google-trends-dashboard/) |
 
 ## 🛠 主要技術
 
