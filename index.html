@@ -322,7 +322,7 @@
       <li><strong>業務日誌智慧萃取系統</strong>：以 LLM 多階段管道（Gemini 2.5 Flash, Vertex AI）自動分析業務日誌，萃取 L1–L7 七層企業客戶痛點與需求情報，ML 聚類識別法人類型，產出可執行的業務作戰地圖，並建置每日自動增量更新的彙整分析系統。<br><strong>成果</strong>：分析 406 萬筆日誌明細，178,790 家企業完成屬性萃取（其中 173,376 家完成完整 L1–L7 情報），平行化處理提速 10 倍</li>
       <li><strong>AiGP 卡關商機分析系統</strong>：每日自動分析 CRM 停滯商機，以 Gemini 2.5 Pro 多執行緒平行處理生成個人化業務話術與活動邀約推薦；評估 <strong>RAG</strong> 與 Fine-tuning 後選擇 Prompt Engineering——客戶痛點/需求/洞察已結構化存在 CRM，可直接組進 prompt 不需向量資料庫，且業務規則變動速度使 Fine-tuning 難以跟上。<br><strong>成果</strong>：每日處理約 220 筆商機、5–8 分鐘完成，卡關商機識別率達 97%</li>
       <li><strong>內容自動標籤系統</strong>：結合 Gemini LLM 語意判斷與關鍵字字典的混合式管道，自動生成場景/議題/產品標籤；並整合四大資料來源建立企業行業代號判定系統，皆透過 FastAPI 提供即時 REST API。<br><strong>成果</strong>：六維結構化標籤（場景/議題/產品/產業/職能/階段），標籤與知識庫即時同步</li>
-      <li><strong>高價值客戶商機推薦系統</strong>：整合日報、問卷、商機等級三大訊號，設計五維度加權評分，識別有互動但尚未建立商機的潛在客戶。<br><strong>成果</strong>：以 Precision@K 與 Lift 曲線量化驗證推薦成效，命中率達隨機挑選 3 倍以上（Lift 3x+）</li>
+      <li><strong>高價值客戶商機推薦系統</strong>：整合業務拜訪日報、問卷萃取的 L1–L7 痛點/需求資料、商機等級三大訊號，設計五維度加權評分（商機等級 ×2、觸及最深 L 層級 ×1.5、跨來源痛點相似度 ×1、近期活躍度 ×1、時近性 ×1）識別有互動但尚未建立商機的潛在客戶，其中跨來源一致性比對日報與問卷的痛點描述，過濾單方面訊號、確認真實需求。<br><strong>成果</strong>：以回溯測試搭配 Precision@K 與 Lift 曲線驗證推薦成效，達 3 倍以上 Lift（推薦名單轉換率為隨機挑選的 3 倍），並依業務員產生個人化推薦名單</li>
       <li><strong>CRM 智慧查詢儀表板</strong>：開發 Streamlit 儀表板，使業務主管無需 SQL 即可查詢、多維度篩選與一鍵匯出 CRM 資料，並設定開機自動啟動。<br><strong>成果</strong>：秒級查詢回應，降低業務主管對資料團隊的臨時查詢依賴</li>
       <li><strong>業務情報看板群</strong>：以 Selenium 每週爬取台灣商業熱搜，建置三個自動化情報看板（總體商業趨勢、競品負面新聞、法規商機訊號），由 Gemini AI 分類彙整為 10 大主題。<br><strong>成果</strong>：全自動更新、零維運成本，成果發布至 GitHub Pages</li>
       <li><strong>爬蟲排程與版控平台</strong>：從零建置容器化爬蟲排程平台，以 Docker 獨立容器化兩種爬蟲類型，Apache Airflow 排程（DockerOperator 啟動隔離容器、失敗自動重試與通知），並導入 GitLab 取代手動檔案上傳做版本控制。<br><strong>成果</strong>：標準化、全自動、零人工介入的排程平台，程式碼異動全程可追蹤，供團隊多人共用</li>
