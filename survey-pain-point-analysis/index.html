@@ -76,6 +76,14 @@
     .home-link{display:inline-block;margin-bottom:16px;font-size:.85rem;color:var(--primary);text-decoration:none;font-weight:600;}
     footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:.85rem;border-top:1px solid var(--border);}
     footer a{color:var(--primary);text-decoration:none;}
+    .corner-link{
+      position:fixed; top:14px; right:16px; z-index:60;
+      font-size:.78rem; font-weight:700; color:#fff; text-decoration:none;
+      padding:6px 14px; border-radius:99px; background:rgba(15,23,42,0.75);
+      border:1px solid rgba(255,255,255,0.25); backdrop-filter:blur(4px);
+      transition:background .15s;
+    }
+    .corner-link:hover{ background:rgba(15,23,42,0.92); }
 
   @media(max-width:640px){
     header{padding:48px 20px 36px;}
@@ -97,6 +105,7 @@
 </style>
 </head>
 <body>
+<a href="https://yujuigato.github.io/" class="corner-link">🔗 作品集首頁</a>
 <header>
   <div class="hero-tag">🙋 多來源整合 × LLM 結構化萃取 × RAG 檢索知識庫</div>
   <h1>問卷痛需分析<br><span>Survey Pain-Point RAG Pipeline</span></h1>
