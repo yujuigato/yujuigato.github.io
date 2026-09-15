@@ -99,11 +99,12 @@
 </head>
 <body>
 <header>
-  <div class="hero-tag">🔍 TF-IDF × 加權重排 × LLM 語意評分 × 三階段漏斗</div>
+  <div class="hero-tag">🔍 RAG 檢索設計 × TF-IDF 檢索 × 加權重排 × LLM 語意評分</div>
   <h1>痛點相似比對系統<br><span>Pain-Point Similarity Matching</span></h1>
-  <p class="subtitle">將業務拜訪日報中客戶提到的自由文字痛點，自動比對到結構化的痛點知識庫，並以真實歷史標記資料反查驗證比對品質</p>
+  <p class="subtitle">Retrieval-Augmented 設計：先用 TF-IDF 從痛點知識庫檢索候選，再用 LLM 對檢索結果做語意評分，將業務拜訪日報中的自由文字痛點比對到結構化知識庫，並以真實歷史標記資料反查驗證比對品質</p>
   <div class="tech-pills">
     <span class="tech-pill">Python</span>
+    <span class="tech-pill">RAG</span>
     <span class="tech-pill">Scikit-learn TF-IDF</span>
     <span class="tech-pill">Gemini LLM</span>
     <span class="tech-pill">Pandas</span>
@@ -150,8 +151,8 @@
   <div class="section-label">How It Works</div>
   <h2>系統如何運作？</h2>
   <div class="highlight-box">
-    <h4>為什麼要分三階段，不直接讓 LLM 比對全部？</h4>
-    <p style="font-size:.92rem;color:#374151;margin-top:6px;">痛點知識庫有上千筆，若每筆日報都對全部痛點做一次 LLM 語意評分，成本與時間會隨資料量線性暴增。改用「先用便宜的方法大量篩選，再用昂貴的方法精算少數候選」的漏斗式設計：TF-IDF 負責快速抓出字面相關的候選，行業／職能加權負責排除明顯不合理的候選，最後才讓 LLM 針對最有可能的 20 筆做語意判斷。</p>
+    <h4>這是一個 Retrieve → Rerank → Generate 的 RAG 設計</h4>
+    <p style="font-size:.92rem;color:#374151;margin-top:6px;">痛點知識庫有上千筆，若每筆日報都對全部痛點做一次 LLM 語意評分，成本與時間會隨資料量線性暴增。改用 RAG 常見的「先檢索、後生成」策略：<strong>Stage 1（Retrieve）</strong>用 TF-IDF 從知識庫快速檢索出字面相關的候選；<strong>Stage 2（Rerank）</strong>用行業／職能加權重新排序、排除明顯不合理的候選；<strong>Stage 3（Generate）</strong>才讓 LLM 針對檢索到的前 20 筆候選做語意判斷與評分。三階段各自負責 RAG 流程中不同的角色，讓昂貴的 LLM 只需處理真正相關的候選集。</p>
   </div>
   <div class="card" style="margin-bottom:24px;">
     <div class="mermaid">

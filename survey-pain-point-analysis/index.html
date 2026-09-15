@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>問卷痛需分析｜Survey Pain-Point RAG Pipeline</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root{--primary:#0d9488;--primary-light:#f0fdfa;--success:#059669;--warning:#d97706;--danger:#dc2626;--bg:#f8fafc;--card:#ffffff;--border:#e2e8f0;--text:#0f172a;--text-muted:#64748b;--text-light:#94a3b8;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;}
+    header{background:linear-gradient(135deg,#0f766e 0%,#0d9488 50%,#4f46e5 100%);color:white;padding:72px 40px 56px;text-align:center;position:relative;overflow:hidden;}
+    header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+    .hero-tag{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:5px 16px;font-size:.85rem;letter-spacing:.05em;margin-bottom:16px;}
+    header h1{font-size:2.4rem;font-weight:800;margin-bottom:16px;line-height:1.2;}
+    header h1 span{color:#99f6e4;}
+    header .subtitle{font-size:1.1rem;opacity:.85;max-width:700px;margin:0 auto 28px;}
+    .tech-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:32px;}
+    .tech-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:6px 16px;font-size:.85rem;font-weight:500;}
+    .hero-stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(255,255,255,0.2);}
+    .hero-stat .num{font-size:2rem;font-weight:800;}
+    .hero-stat .lbl{font-size:.8rem;opacity:.75;margin-top:2px;}
+    main{max-width:960px;margin:0 auto;padding:48px 24px;}
+    section{margin-bottom:56px;}
+    .section-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:8px;}
+    h2{font-size:1.65rem;font-weight:800;color:var(--text);margin-bottom:8px;line-height:1.3;}
+    .section-desc{font-size:1rem;color:var(--text-muted);margin-bottom:24px;max-width:680px;}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+    .problem-card{border-left:4px solid var(--danger);background:#fff5f5;}
+    .solution-card{border-left:4px solid var(--success);background:#f0fdf4;}
+    .problem-card h3{color:var(--danger);}
+    .solution-card h3{color:var(--success);}
+    h3{font-size:1.05rem;font-weight:700;margin:20px 0 8px;}
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+    .stat-card{background:var(--primary-light);border-radius:12px;padding:20px;text-align:center;}
+    .stat-card .number{font-size:2rem;font-weight:800;color:var(--primary);}
+    .stat-card .label{font-size:.82rem;color:var(--text-muted);margin-top:4px;}
+    .steps{display:flex;flex-direction:column;}
+    .step{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--border);}
+    .step:last-child{border-bottom:none;}
+    .step-left{display:flex;flex-direction:column;align-items:center;min-width:40px;}
+    .step-num{width:36px;height:36px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0;}
+    .step-line{width:2px;background:var(--border);flex:1;min-height:20px;margin-top:6px;}
+    .step:last-child .step-line{display:none;}
+    .step-body h4{font-weight:700;font-size:1rem;margin-bottom:4px;}
+    .step-body p{font-size:.9rem;color:var(--text-muted);}
+    .step-detail{background:#f8fafc;border-radius:8px;padding:10px 14px;font-size:.85rem;color:#475569;margin-top:8px;border:1px solid var(--border);}
+    .mermaid{background:white;border-radius:10px;padding:20px;margin:12px 0;overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;font-size:.92rem;}
+    th{background:#f1f5f9;padding:10px 14px;text-align:left;font-weight:600;border-bottom:2px solid var(--border);}
+    td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:#f8fafc;}
+    .tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.8rem;font-weight:600;}
+    .tag-teal{background:#ccfbf1;color:#115e59;}
+    .tag-indigo{background:#e0e7ff;color:#3730a3;}
+    .tag-green{background:#dcfce7;color:#166534;}
+    .tag-amber{background:#fef3c7;color:#92400e;}
+    .challenge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+    .challenge-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;}
+    .challenge-item .ch-label{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--warning);margin-bottom:6px;}
+    .challenge-item h4{font-weight:700;font-size:.95rem;margin-bottom:6px;}
+    .challenge-item p{font-size:.87rem;color:var(--text-muted);}
+    .arrow{text-align:center;font-size:1.2rem;color:var(--success);margin:4px 0;}
+    .challenge-item .solution{font-size:.87rem;color:var(--success);font-weight:600;}
+    .highlight-box{background:linear-gradient(135deg,#f0fdfa,#eef2ff);border:1px solid #99f6e4;border-radius:12px;padding:20px 24px;margin:16px 0;}
+    .highlight-box h4{font-weight:700;color:var(--primary);margin-bottom:8px;}
+    .impact-box{background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #c7d2fe;border-radius:12px;padding:20px 24px;margin:16px 0;}
+    .impact-box h4{font-weight:700;color:#4338ca;margin-bottom:8px;}
+    .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+    .tech-item{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+    .tech-icon{font-size:1.5rem;flex-shrink:0;}
+    .tech-name{font-weight:700;font-size:.9rem;}
+    .tech-desc{font-size:.8rem;color:var(--text-muted);}
+    .home-link{display:inline-block;margin-bottom:16px;font-size:.85rem;color:var(--primary);text-decoration:none;font-weight:600;}
+    footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:.85rem;border-top:1px solid var(--border);}
+    footer a{color:var(--primary);text-decoration:none;}
+
+  @media(max-width:640px){
+    header{padding:48px 20px 36px;}
+    header h1{font-size:1.7rem;}
+    header .subtitle{font-size:.92rem;}
+    .hero-stats{gap:16px;}
+    .hero-stat .num{font-size:1.5rem;}
+    .tech-pill{font-size:.75rem;padding:4px 10px;}
+    .tech-pills{gap:6px;}
+    main{padding:32px 16px;}
+    h2{font-size:1.3rem;}
+    .card-grid,.challenge-grid,.tech-grid{grid-template-columns:1fr;}
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+    table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .mermaid{overflow-x:auto;}
+    .step{gap:12px;}
+    .step-num{width:30px;height:30px;font-size:.8rem;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="hero-tag">🙋 多來源整合 × LLM 結構化萃取 × RAG 檢索知識庫</div>
+  <h1>問卷痛需分析<br><span>Survey Pain-Point RAG Pipeline</span></h1>
+  <p class="subtitle">把活動報名、出席、問卷作答、聯絡資訊四散的原始資料，整合成一份可被下游 AI 話術推薦 agent 即時檢索的結構化知識庫——RAG 架構中的 Retrieval 層</p>
+  <div class="tech-pills">
+    <span class="tech-pill">Python</span>
+    <span class="tech-pill">Gemini Flash Lite</span>
+    <span class="tech-pill">RAG Retrieval 層</span>
+    <span class="tech-pill">Pandas</span>
+    <span class="tech-pill">SQL</span>
+    <span class="tech-pill">排程自動化</span>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">4 來源</div><div class="lbl">CRM／活動出席／問卷／身分對照整合</div></div>
+    <div class="hero-stat"><div class="num">~3,200 家</div><div class="lbl">公司彙整知識庫</div></div>
+    <div class="hero-stat"><div class="num">~68,000 筆</div><div class="lbl">人員明細（含歷史脈絡）</div></div>
+    <div class="hero-stat"><div class="num">每日</div><div class="lbl">自動增量更新</div></div>
+  </div>
+</header>
+<main>
+
+<a class="home-link" href="../">← 回作品集首頁</a>
+
+<section>
+  <div class="section-label">Background</div>
+  <h2>這個系統在解決什麼問題？</h2>
+  <p class="section-desc">業務活動的報名、實際出席、問卷作答、聯絡人資訊，散落在不同系統裡，彼此用不同的鍵值互相對應；業務想知道「這個人上次活動聊了什麼、卡在什麼痛點、現在到什麼購買階段」，得手動跨系統拼湊，數萬筆規模下完全不可行。而如果要讓 AI agent 在通話前自動生成有根據的個人化話術，它也需要一份能被即時檢索、內容可信、結構統一的知識庫可用——這正是 RAG（Retrieval-Augmented Generation）架構裡最容易被低估、卻最花工夫的 Retrieval 層。</p>
+  <div class="card-grid">
+    <div class="card problem-card">
+      <h3>😣 過去的痛點</h3>
+      <ul style="padding-left:18px;font-size:.92rem;color:#374151;margin-top:8px;">
+        <li style="margin-bottom:8px">報名、實到、問卷作答、聯絡資訊四套系統各自獨立，沒有統一的比對鍵</li>
+        <li style="margin-bottom:8px">問卷是開放式文字作答，沒有角色／痛點／購買階段等結構化標籤</li>
+        <li style="margin-bottom:8px">同一家公司多位員工出席同場活動，人工彙整容易漏算或算重</li>
+        <li>下游若要做 AI 話術生成，沒有一份可信、即時、結構統一的知識庫可以檢索</li>
+      </ul>
+    </div>
+    <div class="card solution-card">
+      <h3>✅ 系統如何解決</h3>
+      <ul style="padding-left:18px;font-size:.92rem;color:#374151;margin-top:8px;">
+        <li style="margin-bottom:8px">以「公司 × 活動場次 × 年月」為 session 單位，串接四大來源</li>
+        <li style="margin-bottom:8px">LLM 批次萃取角色、痛點摘要、需求、購買階段，統一輸出結構化欄位</li>
+        <li style="margin-bottom:8px">產出公司彙整／公司活動整合／人員明細三層知識庫，供下游即時查詢</li>
+        <li>每日自動增量更新，確保下游 agent 檢索到的永遠是近兩年的最新脈絡</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">How It Works</div>
+  <h2>系統如何運作？</h2>
+  <div class="highlight-box">
+    <h4>為什麼說這是 RAG 架構的 Retrieval 層？</h4>
+    <p style="font-size:.92rem;color:#374151;margin-top:6px;">RAG 不是只有「向量資料庫 + embedding」一種形式——它的本質是「先檢索出可信的結構化上下文，再交給 LLM 生成」。這個 pipeline 做的正是前半段：把四散的原始資料，整理成三層結構化知識庫（公司彙整 / 公司活動整合 / 人員明細，各自帶近兩年脈絡與近期歷史紀錄），讓下游的話術推薦 agent 在通話前可以直接依「潛客代號」查到這個人／這家公司完整、可信的背景，再送進 LLM 生成個人化的開場白、提問與推進動作。沒有這一層，LLM 只能瞎猜；有了這一層，生成內容才有憑有據。</p>
+  </div>
+  <div class="card" style="margin-bottom:24px;">
+    <div class="mermaid">
+flowchart TD
+    A["活動報名/出席紀錄"] --> E["Session 組裝\n公司 × 活動 × 年月"]
+    B["問卷完整 Q&A"] --> E
+    C["聯絡人基本資料"] --> E
+    D["身分對照\n（去重/補正）"] --> E
+    E --> F["🤖 Gemini Flash Lite\n角色/痛點/需求/購買階段 萃取"]
+    F --> G["三層結構化知識庫\n公司彙整/公司活動整合/人員明細"]
+    G --> H["📚 RAG Retrieval 層"]
+    H -. 下游檢索 .-> I["🤖 話術推薦 Agent\n（非本專案）"]
+    I --> J["個人化電話/Email 話術"]
+    style G fill:#0d9488,color:#fff
+    style H fill:#4f46e5,color:#fff
+    style I fill:#f1f5f9,color:#64748b,stroke-dasharray: 4 3
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>四大來源資料整合與清洗</h4>
+        <p>撈取聯絡人基本資料、活動實際出席紀錄（非僅報名）、完整問卷 Q&A、身分對照表，過濾格式不合法的測試帳號與髒資料。</p>
+        <div class="step-detail">個人帳號缺公司名稱時，走第二來源補正；補不到者標記為「個人」，排除在公司層級彙整之外，避免污染知識庫</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>Session 組裝：公司 × 活動 × 年月</h4>
+        <p>只有「確實出席」的紀錄才會組成 session，並從出席名單展開同公司當場的每一位實到者，共用公司層級的問卷內容。</p>
+        <div class="step-detail">問卷若被重複提交，只取最新一次作答，避免同一人歷史答案互相污染</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>LLM 批次結構化萃取</h4>
+        <p>把每個 session 的問卷 Q&A 交給 Gemini Flash Lite，判斷聯絡人角色（決策者/評估者/使用者/影響者）、萃取核心痛點摘要、主要需求、購買階段標籤。</p>
+        <div class="step-detail">LLM 回傳「無」「不明」「暫無具體痛點」等雜訊語句，統一清洗為空字串，避免污染下游檢索結果</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">4</div></div>
+      <div class="step-body">
+        <h4>產出三層 RAG 知識庫</h4>
+        <p>公司彙整（含近兩年活動數、最新購買階段、各角色痛點/需求分欄）、公司活動整合（單場次角色分布與整體痛點）、人員明細（個人層級痛點摘要＋近期歷史脈絡），供下游 agent 以「潛客代號」即時查詢。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Downstream Impact</div>
+  <h2>這份知識庫的下游應用</h2>
+  <div class="impact-box">
+    <h4>🎯 成為業務話術推薦 Agent 的檢索層</h4>
+    <p style="font-size:.92rem;color:#374151;margin-top:6px;">這個 pipeline 輸出的三層知識庫，後續被另一個團隊用於建構「問卷舉手推薦」agent：業務要聯繫在活動問卷中表達意願的客戶前，agent 會以潛客代號從這份知識庫檢索出對方的角色、本次痛點摘要、近期歷史脈絡與公司整體購買階段，組成 RAG 的檢索上下文，再交給 LLM 生成通話前重點提醒與個人化的電話／Email 開場話術。<strong>這裡展示的是知識庫本身的設計與產出；下游話術生成 agent 的 prompt 設計與應用邏輯不屬於本專案範圍。</strong></p>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Engineering Challenges</div>
+  <h2>解決了哪些技術難題？</h2>
+  <div class="challenge-grid">
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 1</div>
+      <h4>近 7 萬筆規模下的 LLM 成本控制</h4>
+      <p>每個 session 都要跑一次 LLM 結構化萃取，若每次執行都重新分析全部歷史資料，成本與時間都無法接受。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">三層快取設計：已判斷信號永久快取、DB 問卷查詢快取 23 小時、已萃取 session 永久快取，中斷重跑不重複計費</p>
+    </div>
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 2</div>
+      <h4>同公司多人共用問卷內容的正確展開</h4>
+      <p>同一場活動同公司可能有多位員工出席，若用帳號層級去重會誤把多人算成一人，人數統計失真。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">以 Email 而非公司帳號代號計算參與人數，並在 session 組裝時展開每位實到者，各自保留獨立的問卷回應紀錄</p>
+    </div>
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 3</div>
+      <h4>公司名稱髒資料污染知識庫</h4>
+      <p>來源系統中夾雜含電話號碼、暫代字樣、純數字等異常公司名稱，直接寫入知識庫會讓下游檢索抓到錯誤實體。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">以規則偵測異常字串樣式，優先透過身分對照表回填正確公司名稱，找不到再用次要來源欄位 fallback</p>
+    </div>
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 4</div>
+      <h4>知識庫必須即時反映最新脈絡</h4>
+      <p>下游 agent 通話前檢索到的若是過時資料（例如半年前的購買階段），生成的話術會失真甚至造成客戶困擾。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">每日排程自動重算「近兩年」滾動窗口，每次執行以 DROP + CREATE + INSERT 全量覆寫，確保檢索結果不含過期或重複資料</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Output Structure</div>
+  <h2>三層 RAG 知識庫結構</h2>
+  <div class="card">
+    <table>
+      <tr><th>層級</th><th>單位</th><th>用途</th></tr>
+      <tr><td><span class="tag tag-teal">公司彙整</span></td><td>公司</td><td>近兩年活動數、最新購買階段、各角色痛點/需求分欄——下游查「這家公司整體現況」</td></tr>
+      <tr><td><span class="tag tag-indigo">公司活動整合</span></td><td>公司 × 活動 × 年月</td><td>單場次角色分布、整體痛點與需求——下游查「這場活動聊了什麼」</td></tr>
+      <tr><td><span class="tag tag-green">人員明細</span></td><td>人員 × 活動 × 年月</td><td>個人角色、核心痛點摘要、完整問卷 Q&A——下游查「這個人具體說了什麼」</td></tr>
+    </table>
+    <div style="background:#f0fdfa;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:.88rem;color:#115e59;">
+      ✅ 三層彼此可交叉查詢：從人員明細往上可查公司整體現況，讓下游 agent 一次檢索就拿到「單次互動細節」與「長期關係脈絡」兩種層次的上下文
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Tech Stack</div>
+  <h2>技術選型</h2>
+  <div class="tech-grid">
+    <div class="tech-item"><div class="tech-icon">🤖</div><div><div class="tech-name">Gemini Flash Lite</div><div class="tech-desc">大量 session 批次結構化萃取，速度快成本低</div></div></div>
+    <div class="tech-item"><div class="tech-icon">📚</div><div><div class="tech-name">RAG Retrieval 設計</div><div class="tech-desc">三層知識庫結構，供下游 agent 依鍵值即時檢索</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🐼</div><div><div class="tech-name">Pandas</div><div class="tech-desc">多來源資料清洗、session 組裝、欄位彙整</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🗄️</div><div><div class="tech-name">SQL</div><div class="tech-desc">跨系統資料查詢與知識庫寫入</div></div></div>
+    <div class="tech-item"><div class="tech-icon">⏱️</div><div><div class="tech-name">排程自動化</div><div class="tech-desc">每日自動增量更新，知識庫維持最新狀態</div></div></div>
+    <div class="tech-item"><div class="tech-icon">💾</div><div><div class="tech-name">分層快取</div><div class="tech-desc">永久 + 時效快取並用，控制大規模 LLM 呼叫成本</div></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Results</div>
+  <h2>系統規模與成果</h2>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="number">~3,200 家</div><div class="label">公司彙整知識庫</div></div>
+    <div class="stat-card"><div class="number">~47,000 筆</div><div class="label">公司活動整合紀錄</div></div>
+    <div class="stat-card"><div class="number">~68,000 筆</div><div class="label">人員明細（含歷史脈絡）</div></div>
+    <div class="stat-card"><div class="number">每日</div><div class="label">自動增量更新，供下游即時檢索</div></div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <p>問卷痛需分析 · Survey Pain-Point RAG Pipeline &nbsp;|&nbsp; Python · Gemini Flash Lite · RAG Retrieval 層 &nbsp;|&nbsp; <a href="../">← 回作品集首頁</a></p>
+  <p style="margin-top:6px;">最後更新：2026-09-15</p>
+</footer>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',themeVariables:{primaryColor:'#ccfbf1',primaryTextColor:'#115e59',primaryBorderColor:'#5eead4',lineColor:'#64748b'},flowchart:{curve:'monotoneX'}});</script>
+</body>
+</html>

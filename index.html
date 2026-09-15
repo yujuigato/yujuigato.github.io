@@ -92,6 +92,7 @@
     <span class="tag">Gemini AI</span>
     <span class="tag">Vertex AI</span>
     <span class="tag">Claude API</span>
+    <span class="tag">RAG</span>
     <span class="tag">Python</span>
     <span class="tag">SQL Server</span>
     <span class="tag">FastAPI</span>
@@ -99,7 +100,7 @@
     <span class="tag">Prompt Engineering</span>
   </div>
   <div class="stat-row">
-    <div class="stat"><div class="num">7</div><div class="lbl">系統專案</div></div>
+    <div class="stat"><div class="num">8</div><div class="lbl">系統專案</div></div>
     <div class="stat"><div class="num">304K+</div><div class="lbl">企業資料分析</div></div>
     <div class="stat"><div class="num">4 個</div><div class="lbl">LLM 應用</div></div>
     <div class="stat"><div class="num">全自動</div><div class="lbl">端到端流程</div></div>
@@ -204,13 +205,27 @@
     <a class="project-card" href="/pain-point-similarity-matching/" style="--accent-color:linear-gradient(90deg,#7c3aed,#db2777);">
       <div class="card-top">
         <div class="card-icon">🔍</div>
-        <div class="card-tags"><span class="card-tag">三階段漏斗</span><span class="card-tag">反查驗證</span></div>
+        <div class="card-tags"><span class="card-tag">RAG</span><span class="card-tag">反查驗證</span></div>
       </div>
       <div class="card-title">痛點相似比對系統</div>
       <div class="card-subtitle">Pain-Point Similarity Matching</div>
-      <div class="card-desc">將業務日報自由文字痛點比對至結構化知識庫：TF-IDF 粗篩 → 行業/職能加權 → LLM 語意評分，並以歷史資料反查找出評估指標本身的盲點。</div>
+      <div class="card-desc">RAG 式 Retrieve→Rerank→Generate 設計：TF-IDF 檢索 → 行業/職能加權重排 → LLM 語意評分，將業務日報痛點比對至結構化知識庫，並以歷史資料反查找出評估指標本身的盲點。</div>
       <div class="card-footer">
-        <span>TF-IDF · Gemini LLM · Python</span>
+        <span>RAG · TF-IDF · Gemini LLM</span>
+        <span class="card-link">查看專案</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="/survey-pain-point-analysis/" style="--accent-color:linear-gradient(90deg,#0d9488,#4f46e5);">
+      <div class="card-top">
+        <div class="card-icon">🙋</div>
+        <div class="card-tags"><span class="card-tag">RAG 知識庫</span><span class="card-tag">4 來源整合</span></div>
+      </div>
+      <div class="card-title">問卷痛需分析</div>
+      <div class="card-subtitle">Survey Pain-Point RAG Pipeline</div>
+      <div class="card-desc">整合活動報名/出席/問卷/身分四大來源，LLM 批次萃取角色與痛點，產出三層結構化知識庫，作為下游話術推薦 agent 的 RAG 檢索層，每日自動更新。</div>
+      <div class="card-footer">
+        <span>RAG · Gemini Flash Lite · Python</span>
         <span class="card-link">查看專案</span>
       </div>
     </a>
@@ -224,6 +239,7 @@
       <div class="skill-chips">
         <span class="skill-chip">Gemini 2.5 Pro/Flash</span>
         <span class="skill-chip">Vertex AI</span>
+        <span class="skill-chip">RAG Pipeline 設計</span>
         <span class="skill-chip">Prompt Engineering</span>
         <span class="skill-chip">多執行緒 API</span>
         <span class="skill-chip">JSON 快取設計</span>
@@ -283,10 +299,11 @@
       <li>建立高價值客戶商機推薦系統，自 CRM 識別有互動但尚未建立商機的潛在客戶，設計五維度加權評分，以 Lift 曲線驗證推薦成效</li>
       <li>開發 CRM 智慧查詢儀表板（Streamlit），使業務主管無需 SQL 即可秒級查詢、多維度篩選與一鍵匯出 CSV / Excel 報表</li>
       <li>建置 Google Trends 商業環境監測儀表板，每週自動爬取台灣商業熱搜，依 10 大主題聚合分析趨勢方向，成果發布至 GitHub Pages</li>
-      <li>開發痛點相似比對系統，以 TF-IDF 粗篩、行業/職能加權重排、Gemini LLM 語意評分三階段漏斗，將業務日報痛點自動比對至結構化知識庫；以歷史標記資料反查驗證，發現並修正評估指標的顆粒度落差問題</li>
+      <li>開發痛點相似比對系統，以 RAG 式 Retrieve→Rerank→Generate 設計（TF-IDF 檢索、行業/職能加權重排、Gemini LLM 語意評分）將業務日報痛點自動比對至結構化知識庫；以歷史標記資料反查驗證，發現並修正評估指標的顆粒度落差問題</li>
+      <li>建構問卷痛需分析 RAG pipeline，整合活動報名/出席/問卷/身分四大來源，以 LLM 批次萃取角色與痛點，產出三層結構化知識庫（~3,200 家公司、~68,000 筆人員明細），作為下游話術推薦 agent 的 RAG 檢索層，每日自動增量更新</li>
     </ul>
     <div class="exp-tags">
-      <span>Gemini 2.5 Pro/Flash</span><span>Vertex AI</span><span>Claude API</span>
+      <span>Gemini 2.5 Pro/Flash</span><span>Vertex AI</span><span>Claude API</span><span>RAG</span>
       <span>Python</span><span>FastAPI</span><span>Streamlit</span><span>SQL Server</span><span>Scikit-learn</span>
     </div>
   </div>
