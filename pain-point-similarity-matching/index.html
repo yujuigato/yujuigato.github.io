@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>痛點相似比對系統｜Pain-Point Similarity Matching</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root{--primary:#7c3aed;--primary-light:#f5f3ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--bg:#f8fafc;--card:#ffffff;--border:#e2e8f0;--text:#0f172a;--text-muted:#64748b;--text-light:#94a3b8;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;}
+    header{background:linear-gradient(135deg,#6d28d9 0%,#7c3aed 50%,#db2777 100%);color:white;padding:72px 40px 56px;text-align:center;position:relative;overflow:hidden;}
+    header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+    .hero-tag{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:5px 16px;font-size:.85rem;letter-spacing:.05em;margin-bottom:16px;}
+    header h1{font-size:2.4rem;font-weight:800;margin-bottom:16px;line-height:1.2;}
+    header h1 span{color:#f5d0fe;}
+    header .subtitle{font-size:1.1rem;opacity:.85;max-width:680px;margin:0 auto 28px;}
+    .tech-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:32px;}
+    .tech-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:6px 16px;font-size:.85rem;font-weight:500;}
+    .hero-stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(255,255,255,0.2);}
+    .hero-stat .num{font-size:2rem;font-weight:800;}
+    .hero-stat .lbl{font-size:.8rem;opacity:.75;margin-top:2px;}
+    main{max-width:960px;margin:0 auto;padding:48px 24px;}
+    section{margin-bottom:56px;}
+    .section-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:8px;}
+    h2{font-size:1.65rem;font-weight:800;color:var(--text);margin-bottom:8px;line-height:1.3;}
+    .section-desc{font-size:1rem;color:var(--text-muted);margin-bottom:24px;max-width:680px;}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+    .problem-card{border-left:4px solid var(--danger);background:#fff5f5;}
+    .solution-card{border-left:4px solid var(--success);background:#f0fdf4;}
+    .problem-card h3{color:var(--danger);}
+    .solution-card h3{color:var(--success);}
+    h3{font-size:1.05rem;font-weight:700;margin:20px 0 8px;}
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+    .stat-card{background:var(--primary-light);border-radius:12px;padding:20px;text-align:center;}
+    .stat-card .number{font-size:2rem;font-weight:800;color:var(--primary);}
+    .stat-card .label{font-size:.82rem;color:var(--text-muted);margin-top:4px;}
+    .steps{display:flex;flex-direction:column;}
+    .step{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--border);}
+    .step:last-child{border-bottom:none;}
+    .step-left{display:flex;flex-direction:column;align-items:center;min-width:40px;}
+    .step-num{width:36px;height:36px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0;}
+    .step-line{width:2px;background:var(--border);flex:1;min-height:20px;margin-top:6px;}
+    .step:last-child .step-line{display:none;}
+    .step-body h4{font-weight:700;font-size:1rem;margin-bottom:4px;}
+    .step-body p{font-size:.9rem;color:var(--text-muted);}
+    .step-detail{background:#f8fafc;border-radius:8px;padding:10px 14px;font-size:.85rem;color:#475569;margin-top:8px;border:1px solid var(--border);}
+    .mermaid{background:white;border-radius:10px;padding:20px;margin:12px 0;overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;font-size:.92rem;}
+    th{background:#f1f5f9;padding:10px 14px;text-align:left;font-weight:600;border-bottom:2px solid var(--border);}
+    td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:#f8fafc;}
+    .tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.8rem;font-weight:600;}
+    .tag-cyan{background:#cffafe;color:#164e63;}
+    .tag-purple{background:#ede9fe;color:#5b21b6;}
+    .tag-green{background:#dcfce7;color:#166534;}
+    .tag-amber{background:#fef3c7;color:#92400e;}
+    .tag-rose{background:#ffe4e6;color:#9f1239;}
+    .challenge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+    .challenge-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;}
+    .challenge-item .ch-label{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--warning);margin-bottom:6px;}
+    .challenge-item h4{font-weight:700;font-size:.95rem;margin-bottom:6px;}
+    .challenge-item p{font-size:.87rem;color:var(--text-muted);}
+    .arrow{text-align:center;font-size:1.2rem;color:var(--success);margin:4px 0;}
+    .challenge-item .solution{font-size:.87rem;color:var(--success);font-weight:600;}
+    .highlight-box{background:linear-gradient(135deg,#f5f3ff,#fdf2f8);border:1px solid #ddd6fe;border-radius:12px;padding:20px 24px;margin:16px 0;}
+    .highlight-box h4{font-weight:700;color:var(--primary);margin-bottom:8px;}
+    .finding-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px 24px;margin:16px 0;}
+    .finding-box h4{font-weight:700;color:var(--warning);margin-bottom:8px;}
+    .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+    .tech-item{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+    .tech-icon{font-size:1.5rem;flex-shrink:0;}
+    .tech-name{font-weight:700;font-size:.9rem;}
+    .tech-desc{font-size:.8rem;color:var(--text-muted);}
+    .home-link{display:inline-block;margin-bottom:16px;font-size:.85rem;color:var(--primary);text-decoration:none;font-weight:600;}
+    footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:.85rem;border-top:1px solid var(--border);}
+    footer a{color:var(--primary);text-decoration:none;}
+
+  @media(max-width:640px){
+    header{padding:48px 20px 36px;}
+    header h1{font-size:1.7rem;}
+    header .subtitle{font-size:.92rem;}
+    .hero-stats{gap:16px;}
+    .hero-stat .num{font-size:1.5rem;}
+    .tech-pill{font-size:.75rem;padding:4px 10px;}
+    .tech-pills{gap:6px;}
+    main{padding:32px 16px;}
+    h2{font-size:1.3rem;}
+    .card-grid,.challenge-grid,.tech-grid{grid-template-columns:1fr;}
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+    table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .mermaid{overflow-x:auto;}
+    .step{gap:12px;}
+    .step-num{width:30px;height:30px;font-size:.8rem;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="hero-tag">🔍 TF-IDF × 加權重排 × LLM 語意評分 × 三階段漏斗</div>
+  <h1>痛點相似比對系統<br><span>Pain-Point Similarity Matching</span></h1>
+  <p class="subtitle">將業務拜訪日報中客戶提到的自由文字痛點，自動比對到結構化的痛點知識庫，並以真實歷史標記資料反查驗證比對品質</p>
+  <div class="tech-pills">
+    <span class="tech-pill">Python</span>
+    <span class="tech-pill">Scikit-learn TF-IDF</span>
+    <span class="tech-pill">Gemini LLM</span>
+    <span class="tech-pill">Pandas</span>
+    <span class="tech-pill">SQL</span>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">3 階段</div><div class="lbl">粗篩 → 加權重排 → 語意評分</div></div>
+    <div class="hero-stat"><div class="num">226 筆</div><div class="lbl">業務拜訪紀錄比對</div></div>
+    <div class="hero-stat"><div class="num">1,556 筆</div><div class="lbl">痛點知識庫（去重）</div></div>
+    <div class="hero-stat"><div class="num">92.5%</div><div class="lbl">客戶行業標記覆蓋率</div></div>
+  </div>
+</header>
+<main>
+
+<a class="home-link" href="../">← 回作品集首頁</a>
+
+<section>
+  <div class="section-label">Background</div>
+  <h2>這個系統在解決什麼問題？</h2>
+  <p class="section-desc">業務在拜訪客戶後會寫下自由格式的日報，裡面提到的客戶痛點是未結構化的文字；公司另有一份結構化的「痛點知識庫」（涵蓋各行業常見痛點、對應需求與解法）。兩邊資料格式完全不同，過去只能靠人工閱讀日報再逐一比對，速度慢且標準因人而異。</p>
+  <div class="card-grid">
+    <div class="card problem-card">
+      <h3>😣 過去的痛點</h3>
+      <ul style="padding-left:18px;font-size:.92rem;color:#374151;margin-top:8px;">
+        <li style="margin-bottom:8px">日報是自由文字，痛點知識庫是結構化欄位，兩者無法直接比對</li>
+        <li style="margin-bottom:8px">逐筆人工比對數百筆日報 × 上千筆知識庫痛點，完全不可規模化</li>
+        <li style="margin-bottom:8px">客戶的「行業」欄位常缺漏，導致比對時無法用行業縮小候選範圍</li>
+        <li>若直接把全部痛點丟給 LLM 逐一評分，成本與時間都無法接受</li>
+      </ul>
+    </div>
+    <div class="card solution-card">
+      <h3>✅ 系統如何解決</h3>
+      <ul style="padding-left:18px;font-size:.92rem;color:#374151;margin-top:8px;">
+        <li style="margin-bottom:8px">三階段漏斗：TF-IDF 粗篩 → 行業/職能加權重排 → LLM 只對前 20 名精算</li>
+        <li style="margin-bottom:8px">缺行業資料的客戶，以三層 fallback（ID 比對 → 名稱比對 → LLM 推斷）補齊</li>
+        <li style="margin-bottom:8px">兩層分數過濾機制，只保留真正相似的比對結果，避免雜訊淹沒有效資訊</li>
+        <li>以歷史人工標記資料反查驗證，發現並修正評估方法本身的盲點</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">How It Works</div>
+  <h2>系統如何運作？</h2>
+  <div class="highlight-box">
+    <h4>為什麼要分三階段，不直接讓 LLM 比對全部？</h4>
+    <p style="font-size:.92rem;color:#374151;margin-top:6px;">痛點知識庫有上千筆，若每筆日報都對全部痛點做一次 LLM 語意評分，成本與時間會隨資料量線性暴增。改用「先用便宜的方法大量篩選，再用昂貴的方法精算少數候選」的漏斗式設計：TF-IDF 負責快速抓出字面相關的候選，行業／職能加權負責排除明顯不合理的候選，最後才讓 LLM 針對最有可能的 20 筆做語意判斷。</p>
+  </div>
+  <div class="card" style="margin-bottom:24px;">
+    <div class="mermaid">
+flowchart TD
+    A["📝 業務日報\n客戶痛點原文"] --> B["Stage 1\nTF-IDF 字元 n-gram 粗篩"]
+    K["📚 痛點知識庫\n約 1,556 筆（去重）"] --> B
+    B --> C["候選前 100 筆"]
+    C --> D["Stage 2\n行業／職能加權重排"]
+    D --> E["候選前 20 筆"]
+    E --> F["Stage 3\n🤖 Gemini LLM 逐筆語意評分"]
+    F --> G["依分數排序\n兩層過濾輸出"]
+    G --> H["✅ 結構化比對結果"]
+    style F fill:#7c3aed,color:#fff
+    style H fill:#059669,color:#fff
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>Stage 1・TF-IDF 初篩</h4>
+        <p>以字元 2~4 gram 建立 TF-IDF 向量，計算日報痛點文字與知識庫中每筆痛點的相似度，取前 100 名作為候選。</p>
+        <div class="step-detail">用字元 n-gram 而非分詞，對中文的錯字、簡稱、口語化表達較不敏感，粗篩階段追求高召回率而非精準度</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>Stage 2・行業／職能加權重排</h4>
+        <p>候選痛點若行業與客戶不符，分數打折；若對應職能與拜訪對象職稱相符，分數加成，重新排序後取前 20 名。</p>
+        <div class="step-detail">行業不符 × 0.7、職能相符 × 1.2；「泛行業」「趨勢話題」類痛點視為對所有客戶皆適用，不受行業加權影響</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>Stage 3・LLM 語意評分</h4>
+        <p>把客戶背景（產業別）與 20 個候選痛點一起交給 Gemini，對每個候選逐一給出 0~1 的相似分數與判斷理由，不預設門檻先過濾，讓 LLM 看到完整候選集再判斷。</p>
+        <div class="step-detail">最終分數 = LLM 語意分數 × 行業／職能加權係數（上限 1.0），由高到低排序後輸出</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">4</div></div>
+      <div class="step-body">
+        <h4>兩層分數過濾</h4>
+        <p>排名前 3 名與第 4~20 名分開套用門檻：兩層皆只保留分數 > 0.5 的結果，避免輸出大量低相關度的雜訊比對。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Data Prep</div>
+  <h2>比對前的資料補全：三層 fallback 補齊行業標記</h2>
+  <p class="section-desc">行業加權（Stage 2）需要每個客戶都有行業標記，但原始資料只有約三分之二的客戶能直接比對到行業。若放著缺漏值不管，這些客戶就會失去加權篩選的效果，比對品質下降。因此在比對前先做三層 fallback 補全。</p>
+  <div class="card" style="margin-bottom:24px;">
+    <div class="mermaid">
+flowchart LR
+    A["客戶資料"] --> B{"代號可比對？"}
+    B -->|是| C["✅ ID 精確比對\n66.8%"]
+    B -->|否| D{"名稱可比對？"}
+    D -->|是| E["✅ 公司名稱比對\n+15.1% → 81.9%"]
+    D -->|否| F["🤖 LLM 從合法行業選項推斷"]
+    F --> G["✅ LLM 推斷\n+10.6% → 92.5%"]
+    style G fill:#7c3aed,color:#fff
+    </div>
+  </div>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="number">66.8%</div><div class="label">Step 1：ID 精確比對覆蓋率</div></div>
+    <div class="stat-card"><div class="number">81.9%</div><div class="label">Step 2：+ 公司名稱比對</div></div>
+    <div class="stat-card"><div class="number">92.5%</div><div class="label">Step 3：+ LLM 推斷</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Validation · 最有價值的部分</div>
+  <h2>用真實資料反查驗證，找到評估方法本身的盲點</h2>
+  <p class="section-desc">系統上線前，我把比對結果拿去跟過去人工標記在客戶身上的舊痛點代號做反查驗證：AI 對 226 筆日報總共預測出 168 筆比對結果，但直接命中舊人工標記的只有 3 筆——乍看之下命中率低到不可用。但深入分析後發現，問題不在比對演算法，而在「拿什麼當標準答案」這件事本身就有問題。</p>
+  <div class="finding-box">
+    <h4>⚠️ 為什麼「命中率」這個指標會誤導人</h4>
+    <p style="font-size:.92rem;color:#374151;margin-top:6px;line-height:1.8;">
+      <strong>1. 標記顆粒度不對等：</strong>舊制是「客戶累積標記」，同一位客戶可能因過去多次拜訪、多個業務員標記，身上掛了 60 幾個痛點代號；但 AI 比對的是「單次拜訪的摘要」，兩者本來就不是同一個比較單位。<br><br>
+      <strong>2. 比對對象不同層級：</strong>舊標記代表「這位客戶整體」可能有的痛點，AI 比的是「這一次拜訪具體聊到什麼」——用整體標記去對單次紀錄，本質上是拿不同顆粒度的資料互相比較。<br><br>
+      <strong>3. 摘要壓縮流失語意：</strong>業務日報原文只有 9~150 字，再壓縮成摘要後，可用於比對的語意線索更加有限，直接影響 LLM 能判斷的資訊量。
+    </p>
+  </div>
+  <div class="card" style="margin-top:16px;">
+    <h3>調整後的評估方式：分級距人工抽樣審核，取代單一命中率</h3>
+    <p style="font-size:.9rem;color:var(--text-muted);margin-bottom:12px;">既然「跟舊標記直接比對命中率」不是一個公平的指標，改用分數級距分層抽樣，讓人工審核聚焦在真正有鑑別力的樣本上：</p>
+    <table>
+      <tr><th>相似度級距</th><th>用途</th></tr>
+      <tr><td><span class="tag tag-rose">0.0 – 0.6</span></td><td>低相關參考，抽樣確認未誤放行有效比對</td></tr>
+      <tr><td><span class="tag tag-amber">0.6 – 0.7</span></td><td>邊界案例，判斷過濾門檻是否合理</td></tr>
+      <tr><td><span class="tag tag-cyan">0.7 – 0.8</span></td><td>中高相關，檢查加權係數是否合理</td></tr>
+      <tr><td><span class="tag tag-purple">0.8 – 0.9</span></td><td>高相關，驗證 LLM 判斷理由是否站得住腳</td></tr>
+      <tr><td><span class="tag tag-green">0.9 – 1.0</span></td><td>近乎確定相符，確認無誤判</td></tr>
+    </table>
+    <div style="background:#f0fdf4;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:.88rem;color:#166534;">
+      ✅ 每個級距抽樣後交由人工判定，比單一命中率更能反映系統在不同信心區間的真實表現，也讓後續調整加權參數有明確依據
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Engineering Challenges</div>
+  <h2>解決了哪些技術難題？</h2>
+  <div class="challenge-grid">
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 1</div>
+      <h4>LLM 全量比對成本過高</h4>
+      <p>痛點知識庫上千筆，日報數百筆，若每一對都送 LLM 評分，呼叫次數會是資料量的乘積級增長。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">TF-IDF 先粗篩到 100 筆、加權重排再收斂到 20 筆，LLM 只需對真正有機會的候選做精算，大幅降低呼叫量</p>
+    </div>
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 2</div>
+      <h4>近三分之一客戶缺行業標記</h4>
+      <p>行業加權是提升比對精準度的關鍵機制，但原始資料有大量客戶無法直接對應到行業別。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">設計三層 fallback（ID 精確比對 → 名稱比對 → LLM 從合法選項推斷），將覆蓋率從 66.8% 提升到 92.5%</p>
+    </div>
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 3</div>
+      <h4>評估指標本身可能失真</h4>
+      <p>用「是否命中舊人工標記」當作準確率指標，看似客觀，實際上兩者顆粒度與比較對象都不同，會低估系統真實表現。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">拆解命中率低的三個根本原因，改採分數級距抽樣人工審核，讓評估方式對齊系統實際的比較單位</p>
+    </div>
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 4</div>
+      <h4>過濾門檻要在雜訊與遺漏間取捨</h4>
+      <p>門檻設太寬，輸出充斥低相關度的雜訊比對；設太嚴，可能漏掉真正相關但用詞差異大的痛點。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">前 3 名與第 4~20 名分開套用分數門檻的兩層過濾機制，兼顧「最相似候選」與「補充候選」兩種情境</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Tech Stack</div>
+  <h2>技術選型</h2>
+  <div class="tech-grid">
+    <div class="tech-item"><div class="tech-icon">🧮</div><div><div class="tech-name">Scikit-learn TF-IDF</div><div class="tech-desc">字元 n-gram 向量化，粗篩階段快速大量比對</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🤖</div><div><div class="tech-name">Gemini LLM</div><div class="tech-desc">對候選痛點逐一語意評分並給出判斷理由</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🐼</div><div><div class="tech-name">Pandas</div><div class="tech-desc">資料清洗、欄位展開、輸出結構化 JSON</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🗄️</div><div><div class="tech-name">SQL</div><div class="tech-desc">拜訪紀錄與痛點知識庫的資料查詢與整合</div></div></div>
+    <div class="tech-item"><div class="tech-icon">📊</div><div><div class="tech-name">openpyxl</div><div class="tech-desc">產出分級距抽樣的人工審核 Excel</div></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Results</div>
+  <h2>系統規模與成果</h2>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="number">226 筆</div><div class="label">業務拜訪紀錄完成比對</div></div>
+    <div class="stat-card"><div class="number">1,556 筆</div><div class="label">痛點知識庫（去重後）</div></div>
+    <div class="stat-card"><div class="number">92.5%</div><div class="label">客戶行業標記覆蓋率</div></div>
+    <div class="stat-card"><div class="number">3 → 1</div><div class="label">從 3 階段漏斗收斂到最終比對結果</div></div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <p>痛點相似比對系統 · Pain-Point Similarity Matching &nbsp;|&nbsp; Python · TF-IDF · Gemini LLM &nbsp;|&nbsp; <a href="../">← 回作品集首頁</a></p>
+  <p style="margin-top:6px;">最後更新：2026-09-15</p>
+</footer>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',themeVariables:{primaryColor:'#ede9fe',primaryTextColor:'#5b21b6',primaryBorderColor:'#c4b5fd',lineColor:'#64748b'},flowchart:{curve:'monotoneX'}});</script>
+</body>
+</html>
