@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>爬蟲排程與版控平台｜Scraper Orchestration Platform</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <style>
     :root{--primary:#2563eb;--primary-light:#eff6ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--bg:#f8fafc;--card:#ffffff;--border:#e2e8f0;--text:#0f172a;--text-muted:#64748b;--text-light:#94a3b8;}
     *{box-sizing:border-box;margin:0;padding:0;}
@@ -28,6 +29,16 @@
     h3{font-size:1.05rem;font-weight:700;margin:0 0 10px;}
     .did-list{padding-left:20px;font-size:.95rem;color:#374151;}
     .did-list li{margin-bottom:10px;}
+    .mermaid{background:white;border-radius:10px;padding:20px;margin:12px 0;overflow-x:auto;}
+    .steps{display:flex;flex-direction:column;}
+    .step{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--border);}
+    .step:last-child{border-bottom:none;}
+    .step-left{display:flex;flex-direction:column;align-items:center;min-width:36px;}
+    .step-num{width:32px;height:32px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0;}
+    .step-line{width:2px;background:var(--border);flex:1;min-height:16px;margin-top:6px;}
+    .step:last-child .step-line{display:none;}
+    .step-body h4{font-weight:700;font-size:.95rem;margin-bottom:4px;}
+    .step-body p{font-size:.88rem;color:var(--text-muted);}
     .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
     .stat-card{background:var(--primary-light);border-radius:12px;padding:20px;text-align:center;}
     .stat-card .number{font-size:1.5rem;font-weight:800;color:var(--primary);}
@@ -60,6 +71,9 @@
     h2{font-size:1.3rem;}
     .tech-grid{grid-template-columns:1fr;}
     .stat-grid{grid-template-columns:repeat(2,1fr);}
+    .mermaid{overflow-x:auto;}
+    .step{gap:12px;}
+    .step-num{width:28px;height:28px;font-size:.78rem;}
   }
 </style>
 </head>
@@ -98,6 +112,53 @@
 </section>
 
 <section>
+  <div class="section-label">Architecture</div>
+  <h2>Airflow 排程架構</h2>
+  <p class="section-desc">採用 Airflow 標準三件式架構：Scheduler 負責依排程觸發任務、Webserver 提供監控介面、Metadata DB 記錄執行歷史。每個爬蟲對應一個 DAG，以 DockerOperator 啟動獨立容器執行，跑完自動清除，失敗則重試並發送通知。</p>
+  <div class="card" style="margin-bottom:24px;">
+    <div class="mermaid">
+flowchart TD
+    A["Airflow Scheduler\n依排程觸發 DAG"] --> B["DAG: scraper-light 任務"]
+    A --> C["DAG: scraper-browser 任務"]
+    B --> D["DockerOperator\n啟動輕量爬蟲容器"]
+    C --> E["DockerOperator\n啟動 Chrome 爬蟲容器"]
+    D --> F["任務完成\n容器自動清除"]
+    E --> F
+    D -.失敗.-> G["自動重試"]
+    E -.失敗.-> G
+    G -.仍失敗.-> H["Email 通知"]
+    I["Metadata DB"] -.記錄執行歷史.-> A
+    J["Webserver\n監控介面"] -.讀取.-> I
+    style A fill:#2563eb,color:#fff
+    style F fill:#059669,color:#fff
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>一個爬蟲對應一個 DAG</h4>
+        <p>每支爬蟲獨立定義排程週期，互不影響；新增爬蟲只需新增一個 DAG 檔案，不需改動既有排程。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>DockerOperator 啟動隔離容器</h4>
+        <p>DAG 觸發時才啟動對應的爬蟲容器，任務結束即自動清除，平時不佔用資源，也避免任務之間互相汙染執行環境。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">3</div></div>
+      <div class="step-body">
+        <h4>失敗重試與通知</h4>
+        <p>任務失敗會依設定自動重試，仍失敗則發送通知，取代過去「要等人發現資料沒更新才知道爬蟲掛了」的被動狀態。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
   <div class="section-label">Tech Stack</div>
   <h2>技術選型</h2>
   <div class="tech-grid">
@@ -122,5 +183,6 @@
 <footer>
   <p>爬蟲排程與版控平台 · Scraper Orchestration Platform &nbsp;|&nbsp; Docker · Airflow · GitLab &nbsp;|&nbsp; <a href="https://yujuigato.github.io/">← 回作品集首頁</a></p>
 </footer>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',themeVariables:{primaryColor:'#dbeafe',primaryTextColor:'#1e40af',primaryBorderColor:'#93c5fd',lineColor:'#64748b'},flowchart:{curve:'monotoneX'}});</script>
 </body>
 </html>
