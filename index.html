@@ -317,8 +317,8 @@
       <div class="exp-date">2025/09 ~ Present</div>
     </div>
     <ul>
-      <li><strong>痛點相似比對系統</strong>：以 <strong>RAG</strong>（Retrieval-Augmented Generation）架構設計 Retrieve→Rerank→Generate 三階段管道——TF-IDF 檢索候選、行業/職能加權重排、Gemini LLM 語意評分生成——將業務日報自由文字痛點比對至結構化知識庫。<br><strong>成果</strong>：完成 226 筆日報比對、行業標記覆蓋率提升至 92.5%；以歷史資料反查驗證，發現並修正評估指標的顆粒度落差問題</li>
-      <li><strong>問卷痛需分析 RAG Pipeline</strong>：整合活動報名/出席/問卷/身分四大來源，以 LLM 批次萃取角色與痛點，建立可供下游 agent 即時查詢的三層結構化知識庫，作為 <strong>RAG</strong> 架構中的 Retrieval 檢索層。<br><strong>成果</strong>：涵蓋 ~3,200 家公司彙整、~68,000 筆人員明細，每日自動增量更新，支撐下游話術推薦 agent 的檢索式生成</li>
+      <li><strong>痛點相似比對系統</strong>：以 <strong>RAG</strong>（Retrieval-Augmented Generation）架構設計 Retrieve→Rerank→Generate 三階段管道——Stage 1 以字元 n-gram TF-IDF 從 1,556 筆知識庫檢索出前 100 名候選，Stage 2 依行業/職能加權重排至前 20 名，Stage 3 由 Gemini LLM 逐一語意評分；並設計三層 fallback（ID 比對→名稱比對→LLM 推斷）補齊客戶缺漏的行業標記，覆蓋率由 66.8% 提升至 92.5%；發現「對照舊人工標記的命中率」本身是顆粒度不對等、會失真的評估指標，改以分數級距分層抽樣供人工審核。<br><strong>成果</strong>：完成 226 筆日報比對；以歷史資料反查驗證，修正了評估方法本身的系統性偏誤，而非直接採信表面偏低、具誤導性的命中率數字</li>
+      <li><strong>問卷痛需分析 RAG Pipeline</strong>：整合活動報名、實際出席、問卷作答、聯絡人資訊四大來源，以「公司×活動×年月」組成 session，用 Gemini Flash Lite 批次萃取角色、痛點摘要、需求與購買階段，建立公司彙整/公司活動整合/人員明細三層結構化知識庫，作為下游話術推薦 agent 的 <strong>RAG</strong> 檢索層；設計三層快取（永久/23 小時/永久）控制大規模 LLM 成本，並以每日排程全量重建維持最新兩年滾動窗口。<br><strong>成果</strong>：知識庫涵蓋 ~3,200 家公司、~68,000 筆人員明細，供下游 agent 依潛客代號即時查詢以生成個人化話術，每日自動增量更新</li>
       <li><strong>業務日誌智慧萃取系統</strong>：以 LLM 多階段管道（Gemini 2.5 Flash, Vertex AI）自動分析業務日誌，萃取 L1–L7 七層企業客戶痛點與需求情報，ML 聚類識別法人類型，產出可執行的業務作戰地圖，並建置每日自動增量更新的彙整分析系統。<br><strong>成果</strong>：分析 406 萬筆日誌明細，178,790 家企業完成屬性萃取（其中 173,376 家完成完整 L1–L7 情報），平行化處理提速 10 倍</li>
       <li><strong>AiGP 卡關商機分析系統</strong>：每日自動分析 CRM 停滯商機，以 Gemini 2.5 Pro 多執行緒平行處理生成個人化業務話術與活動邀約推薦；評估 <strong>RAG</strong> 與 Fine-tuning 後選擇 Prompt Engineering——客戶痛點/需求/洞察已結構化存在 CRM，可直接組進 prompt 不需向量資料庫，且業務規則變動速度使 Fine-tuning 難以跟上。<br><strong>成果</strong>：每日處理約 220 筆商機、5–8 分鐘完成，卡關商機識別率達 97%</li>
       <li><strong>內容自動標籤系統</strong>：結合 Gemini LLM 語意判斷與關鍵字字典的混合式管道，自動生成場景/議題/產品標籤；並整合四大資料來源建立企業行業代號判定系統，皆透過 FastAPI 提供即時 REST API。<br><strong>成果</strong>：六維結構化標籤（場景/議題/產品/產業/職能/階段），標籤與知識庫即時同步</li>
@@ -330,7 +330,7 @@
     <div class="exp-tags">
       <span>Gemini 2.5 Pro/Flash</span><span>Vertex AI</span><span>Claude API</span><span>RAG</span>
       <span>Python</span><span>FastAPI</span><span>Streamlit</span><span>SQL Server</span><span>Scikit-learn</span>
-      <span>Docker</span><span>Airflow</span><span>GitLab</span><span>Selenium</span><span>PostgreSQL</span>
+      <span>Docker</span><span>Airflow</span><span>GitLab</span><span>Selenium</span><span>PostgreSQL</span><span>TF-IDF</span>
     </div>
   </div>
 
