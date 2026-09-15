@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>爬蟲排程與版控平台｜Scraper Orchestration Platform</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root{--primary:#2563eb;--primary-light:#eff6ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--bg:#f8fafc;--card:#ffffff;--border:#e2e8f0;--text:#0f172a;--text-muted:#64748b;--text-light:#94a3b8;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;}
+    header{background:linear-gradient(135deg,#1e293b 0%,#334155 50%,#2563eb 100%);color:white;padding:72px 40px 56px;text-align:center;position:relative;overflow:hidden;}
+    header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+    .hero-tag{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:5px 16px;font-size:.85rem;letter-spacing:.05em;margin-bottom:16px;}
+    header h1{font-size:2.4rem;font-weight:800;margin-bottom:16px;line-height:1.2;}
+    header h1 span{color:#93c5fd;}
+    header .subtitle{font-size:1.1rem;opacity:.85;max-width:700px;margin:0 auto 28px;}
+    .tech-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:32px;}
+    .tech-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:6px 16px;font-size:.85rem;font-weight:500;}
+    .hero-stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(255,255,255,0.2);}
+    .hero-stat .num{font-size:2rem;font-weight:800;}
+    .hero-stat .lbl{font-size:.8rem;opacity:.75;margin-top:2px;}
+    main{max-width:960px;margin:0 auto;padding:48px 24px;}
+    section{margin-bottom:56px;}
+    .section-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:8px;}
+    h2{font-size:1.65rem;font-weight:800;color:var(--text);margin-bottom:8px;line-height:1.3;}
+    .section-desc{font-size:1rem;color:var(--text-muted);margin-bottom:24px;max-width:100%;}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+    .problem-card{border-left:4px solid var(--danger);background:#fff5f5;}
+    .solution-card{border-left:4px solid var(--success);background:#f0fdf4;}
+    .problem-card h3{color:var(--danger);}
+    .solution-card h3{color:var(--success);}
+    h3{font-size:1.05rem;font-weight:700;margin:20px 0 8px;}
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+    .stat-card{background:var(--primary-light);border-radius:12px;padding:20px;text-align:center;}
+    .stat-card .number{font-size:2rem;font-weight:800;color:var(--primary);}
+    .stat-card .label{font-size:.82rem;color:var(--text-muted);margin-top:4px;}
+    .steps{display:flex;flex-direction:column;}
+    .step{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--border);}
+    .step:last-child{border-bottom:none;}
+    .step-left{display:flex;flex-direction:column;align-items:center;min-width:40px;}
+    .step-num{width:36px;height:36px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0;}
+    .step-line{width:2px;background:var(--border);flex:1;min-height:20px;margin-top:6px;}
+    .step:last-child .step-line{display:none;}
+    .step-body h4{font-weight:700;font-size:1rem;margin-bottom:4px;}
+    .step-body p{font-size:.9rem;color:var(--text-muted);}
+    .step-detail{background:#f8fafc;border-radius:8px;padding:10px 14px;font-size:.85rem;color:#475569;margin-top:8px;border:1px solid var(--border);}
+    .mermaid{background:white;border-radius:10px;padding:20px;margin:12px 0;overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;font-size:.92rem;}
+    th{background:#f1f5f9;padding:10px 14px;text-align:left;font-weight:600;border-bottom:2px solid var(--border);}
+    td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:#f8fafc;}
+    .tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.8rem;font-weight:600;}
+    .tag-blue{background:#dbeafe;color:#1e40af;}
+    .tag-green{background:#dcfce7;color:#166534;}
+    .tag-amber{background:#fef3c7;color:#92400e;}
+    .tag-slate{background:#e2e8f0;color:#334155;}
+    .challenge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+    .challenge-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;}
+    .challenge-item .ch-label{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--warning);margin-bottom:6px;}
+    .challenge-item h4{font-weight:700;font-size:.95rem;margin-bottom:6px;}
+    .challenge-item p{font-size:.87rem;color:var(--text-muted);}
+    .arrow{text-align:center;font-size:1.2rem;color:var(--success);margin:4px 0;}
+    .challenge-item .solution{font-size:.87rem;color:var(--success);font-weight:600;}
+    .highlight-box{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1px solid #bfdbfe;border-radius:12px;padding:20px 24px;margin:16px 0;}
+    .highlight-box h4{font-weight:700;color:var(--primary);margin-bottom:8px;}
+    .security-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:20px 24px;margin:16px 0;}
+    .security-box h4{font-weight:700;color:var(--warning);margin-bottom:8px;}
+    .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+    .tech-item{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+    .tech-icon{font-size:1.5rem;flex-shrink:0;}
+    .tech-name{font-weight:700;font-size:.9rem;}
+    .tech-desc{font-size:.8rem;color:var(--text-muted);}
+    footer{text-align:center;padding:40px 24px;color:var(--text-muted);font-size:.85rem;border-top:1px solid var(--border);}
+    footer a{color:var(--primary);text-decoration:none;}
+    .corner-link{
+      position:fixed; top:14px; right:16px; z-index:60;
+      font-size:.78rem; font-weight:700; color:#fff; text-decoration:none;
+      padding:6px 14px; border-radius:99px; background:rgba(15,23,42,0.75);
+      border:1px solid rgba(255,255,255,0.25); backdrop-filter:blur(4px);
+      transition:background .15s;
+    }
+    .corner-link:hover{ background:rgba(15,23,42,0.92); }
+
+  @media(max-width:640px){
+    header{padding:48px 20px 36px;}
+    header h1{font-size:1.7rem;}
+    header .subtitle{font-size:.92rem;}
+    .hero-stats{gap:16px;}
+    .hero-stat .num{font-size:1.5rem;}
+    .tech-pill{font-size:.75rem;padding:4px 10px;}
+    .tech-pills{gap:6px;}
+    main{padding:32px 16px;}
+    h2{font-size:1.3rem;}
+    .card-grid,.challenge-grid,.tech-grid{grid-template-columns:1fr;}
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+    table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .mermaid{overflow-x:auto;}
+    .step{gap:12px;}
+    .step-num{width:30px;height:30px;font-size:.8rem;}
+  }
+</style>
+</head>
+<body>
+<a href="https://yujuigato.github.io/" class="corner-link">🔗 作品集首頁</a>
+<header>
+  <div class="hero-tag">🐳 Docker × Airflow × 自架 GitLab × 排程自動化</div>
+  <h1>爬蟲排程與版控平台<br><span>Scraper Orchestration Platform</span></h1>
+  <p class="subtitle">從零開始建置一套容器化爬蟲排程平台：Docker 隔離執行環境、Airflow 負責排程與失敗重試、自架 GitLab 做版本控制，把「手動跑爬蟲」變成「排程自動執行、程式碼可追蹤」的可維運系統</p>
+  <div class="tech-pills">
+    <span class="tech-pill">Docker / Docker Compose</span>
+    <span class="tech-pill">Apache Airflow</span>
+    <span class="tech-pill">GitLab CI/CD</span>
+    <span class="tech-pill">CentOS Stream</span>
+    <span class="tech-pill">PostgreSQL</span>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">2 類</div><div class="lbl">容器化爬蟲（輕量/瀏覽器）</div></div>
+    <div class="hero-stat"><div class="num">每日排程</div><div class="lbl">DAG 自動觸發、失敗自動通知</div></div>
+    <div class="hero-stat"><div class="num">全版控</div><div class="lbl">Windows 開發 → GitLab → 伺服器同步</div></div>
+    <div class="hero-stat"><div class="num">當日修補</div><div class="lbl">高風險 CVE 核心漏洞應變</div></div>
+  </div>
+</header>
+<main>
+
+<section>
+  <div class="section-label">Background</div>
+  <h2>這個平台在解決什麼問題？</h2>
+  <p class="section-desc">團隊有多支爬蟲（純 API 下載型、需要瀏覽器渲染的 Chrome 型），過去只能在本機手動執行，沒有排程、沒有容器隔離、也沒有版本控制——改一行程式碼不知道是誰改的，換一台機器就要重新設定環境。需要一個能讓爬蟲「定期自動跑、壞了會通知、程式碼有歷史紀錄」的平台。</p>
+  <div class="card-grid">
+    <div class="card problem-card">
+      <h3>😣 過去的痛點</h3>
+      <ul style="padding-left:18px;font-size:.92rem;color:#374151;margin-top:8px;">
+        <li style="margin-bottom:8px">爬蟲只能手動執行，沒有排程機制，容易忘記跑或跑到一半中斷</li>
+        <li style="margin-bottom:8px">輕量 API 爬蟲與需要瀏覽器渲染的爬蟲環境需求差異大，混在一起管理容易互相干擾</li>
+        <li style="margin-bottom:8px">程式碼只存在單一台機器上，沒有版本紀錄，換機器或多人協作都很麻煩</li>
+        <li>沒有排程失敗通知機制，爬蟲掛掉往往要等到有人發現資料沒更新才知道</li>
+      </ul>
+    </div>
+    <div class="card solution-card">
+      <h3>✅ 平台如何解決</h3>
+      <ul style="padding-left:18px;font-size:.92rem;color:#374151;margin-top:8px;">
+        <li style="margin-bottom:8px">Docker 容器化兩種爬蟲類型，各自獨立映像檔，互不干擾</li>
+        <li style="margin-bottom:8px">Airflow DAG 排程觸發，內建重試機制與失敗 Email 通知</li>
+        <li style="margin-bottom:8px">自架 GitLab 做版本控制，Windows 本機開發、伺服器端 git pull 直接同步</li>
+        <li>建立標準化部署與新增使用者流程，任何人都能照文件複製一套環境</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">How It Works</div>
+  <h2>系統如何運作？</h2>
+  <div class="highlight-box">
+    <h4>為什麼要拆成兩種容器化爬蟲？</h4>
+    <p style="font-size:.92rem;color:#374151;margin-top:6px;">純 API 下載型爬蟲只需要輕量的 Python 環境，但需要瀏覽器渲染的爬蟲得帶著完整的 Chrome 執行環境，映像檔動輒大上好幾倍。把兩者拆成獨立的 Docker 映像檔（scraper-light / scraper-browser），輕量任務不用背著 Chrome 的重量執行，資源使用更有效率，也讓兩種爬蟲可以獨立版本管理、獨立重建。</p>
+  </div>
+  <div class="card" style="margin-bottom:24px;">
+    <div class="mermaid">
+flowchart TD
+    A["Windows 本機開發"] -->|git push| B["自架 GitLab"]
+    B -->|git pull| C["Linux 伺服器"]
+    C --> D["docker compose up -d --build"]
+    D --> E["scraper-light 容器\n輕量 API 爬蟲"]
+    D --> F["scraper-browser 容器\nChrome 爬蟲"]
+    D --> G["Airflow Scheduler"]
+    G -->|DAG 排程觸發| E
+    G -->|DAG 排程觸發| F
+    G -->|失敗| H["Email 通知"]
+    E & F --> I["爬取結果"]
+    style D fill:#2563eb,color:#fff
+    style G fill:#059669,color:#fff
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>基礎環境建置</h4>
+        <p>CentOS Stream 主機安裝 Docker Engine 與 Docker Compose，設定開機自動啟動，並以 SSH 金鑰綁定自架 GitLab 帳號。</p>
+        <div class="step-detail">建立標準化目錄結構：爬蟲程式碼、Airflow DAG、logs 各自獨立資料夾，並針對 Airflow container 內部使用者權限設定對應的目錄擁有權</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>Airflow 初始化</h4>
+        <p>以 Docker Compose 啟動 Airflow webserver、scheduler 與 PostgreSQL 後端資料庫，初始化 metadata 資料庫並建立管理員帳號。</p>
+        <div class="step-detail">敏感設定（DB 密碼、Fernet 加密金鑰）統一放在 .env 檔案，並加入 .gitignore 排除版控，避免機密資訊進入 Git 歷史</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>容器化爬蟲部署</h4>
+        <p>兩種爬蟲各自撰寫 Dockerfile 與 requirements.txt，透過 Docker Compose 統一編排，各自在獨立容器中執行。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <h4>DAG 排程設定</h4>
+        <p>以 DockerOperator 撰寫 Airflow DAG，每個排程任務啟動對應的爬蟲容器、執行完自動清除，並設定失敗重試與 Email 通知。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">5</div></div>
+      <div class="step-body">
+        <h4>Git 化開發流程</h4>
+        <p>從最初用 scp 手動上傳檔案，逐步改為 Windows 本機開發 → push 到自架 GitLab → 伺服器端 pull 並重建容器的標準工作流程，程式碼異動全程可追蹤。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Security Maintenance</div>
+  <h2>上線後的資安維護：當日應對高風險 CVE</h2>
+  <div class="security-box">
+    <h4>⚠️ WSL2 核心高風險漏洞（CVSS 7.8）應變紀錄</h4>
+    <p style="font-size:.92rem;color:#374151;margin-top:6px;">開發環境的 WSL2 Linux 核心被揭露一個可讓本機使用者取得 root 權限的高風險漏洞。收到情資後，當天完成影響範圍盤點（確認 Windows 主系統不受影響，WSL2 子系統落在受影響版本區間）、執行核心更新、並驗證更新後版本已脫離受影響區間，同時建立每月固定檢查更新的維護習慣。</p>
+  </div>
+  <div class="card">
+    <table>
+      <tr><th>項目</th><th>內容</th></tr>
+      <tr><td>影響範圍盤點</td><td>比對主系統與 WSL2 子系統的核心版本，確認實際受影響的環境</td></tr>
+      <tr><td>修補執行</td><td>更新 WSL2 核心並重啟子系統套用新版本</td></tr>
+      <tr><td>修補驗證</td><td>更新後重新檢查核心版本號，確認已脫離受影響區間</td></tr>
+      <tr><td>後續預防</td><td>建立每月固定執行更新檢查的維護排程，並確認系統自動更新設定已開啟</td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Engineering Challenges</div>
+  <h2>解決了哪些技術難題？</h2>
+  <div class="challenge-grid">
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 1</div>
+      <h4>資料庫連線字串裡的特殊字元陷阱</h4>
+      <p>密碼若含有 @、+、* 等特殊符號，環境變數展開後容易被連線字串誤判為分隔符，導致資料庫連線失敗且錯誤訊息不直觀。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">制定密碼命名規則排除特殊符號，並在 docker-compose 中直接寫死完整連線字串，避免環境變數展開時的二次解析問題</p>
+    </div>
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 2</div>
+      <h4>容器內部使用者權限與宿主機不一致</h4>
+      <p>Airflow container 內部固定使用 UID 50000 執行，若掛載的 logs 目錄權限沒對應設定，容器會因為寫入權限不足而啟動失敗。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">部署時將 logs 目錄擁有者設為對應 UID，並開放群組寫入權限，確保容器與宿主機的權限模型互相相容</p>
+    </div>
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 3</div>
+      <h4>機密資訊不能進版控，但團隊要能重建環境</h4>
+      <p>資料庫密碼、Airflow 加密金鑰等機密資訊若寫入 Git，會永久留在版本歷史裡難以清除；但完全不留紀錄又會讓換機器或新成員難以重建環境。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">機密設定統一集中在 .env 並加入 .gitignore，Git 裡只留 .env 的範例格式；換機器時的還原流程明確記錄「需手動重建 .env」這一步</p>
+    </div>
+    <div class="challenge-item">
+      <div class="ch-label">Challenge 4</div>
+      <h4>從手動 scp 到全版控的開發流程遷移</h4>
+      <p>最初以 scp 手動上傳檔案到伺服器，容易漏傳、覆蓋別人的改動，且完全沒有歷史紀錄可追溯。</p>
+      <div class="arrow">↓ 解決方案</div>
+      <p class="solution">導入自架 GitLab，建立「本機 push → 伺服器 pull → 重建容器」的標準流程，取代手動檔案傳輸，讓每次異動都有 commit 紀錄可查</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Tech Stack</div>
+  <h2>技術選型</h2>
+  <div class="tech-grid">
+    <div class="tech-item"><div class="tech-icon">🐳</div><div><div class="tech-name">Docker / Docker Compose</div><div class="tech-desc">容器化隔離兩種爬蟲執行環境，統一編排啟動</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🌬️</div><div><div class="tech-name">Apache Airflow</div><div class="tech-desc">DAG 排程、DockerOperator 觸發容器、失敗重試與通知</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🦊</div><div><div class="tech-name">自架 GitLab</div><div class="tech-desc">內部版本控制，SSH 金鑰驗證，取代手動檔案傳輸</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🐘</div><div><div class="tech-name">PostgreSQL</div><div class="tech-desc">Airflow metadata 資料庫後端</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🖥️</div><div><div class="tech-name">CentOS Stream</div><div class="tech-desc">伺服器作業系統，搭配 firewalld 管理對外服務埠</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🔐</div><div><div class="tech-name">SSH Key 驗證</div><div class="tech-desc">GitLab 存取與伺服器連線皆採金鑰驗證，不使用密碼登入</div></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Results</div>
+  <h2>平台成果</h2>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="number">2 類</div><div class="label">容器化爬蟲類型獨立部署</div></div>
+    <div class="stat-card"><div class="number">全自動</div><div class="label">DAG 每日定時觸發，免人工執行</div></div>
+    <div class="stat-card"><div class="number">全版控</div><div class="label">程式碼異動皆有 commit 歷史可查</div></div>
+    <div class="stat-card"><div class="number">當日</div><div class="label">高風險 CVE 核心漏洞完成盤點與修補</div></div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <p>爬蟲排程與版控平台 · Scraper Orchestration Platform &nbsp;|&nbsp; Docker · Airflow · GitLab &nbsp;|&nbsp; <a href="https://yujuigato.github.io/">← 回作品集首頁</a></p>
+  <p style="margin-top:6px;">最後更新：2026-09-15</p>
+</footer>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',themeVariables:{primaryColor:'#dbeafe',primaryTextColor:'#1e40af',primaryBorderColor:'#93c5fd',lineColor:'#64748b'},flowchart:{curve:'monotoneX'}});</script>
+</body>
+</html>
