@@ -87,7 +87,7 @@
   <div class="avatar">Y</div>
   <h1>曾于芮 <span>Resa Tseng</span></h1>
   <div style="font-size:.9rem;color:var(--text-muted);margin-bottom:12px;letter-spacing:.04em;">資料科學家 · B2B IT 產業 · 台灣</div>
-  <p>以 Python 與 LLM 建構企業業務智慧化系統，從 CRM 資料萃取、AI 痛點分析到自動化輸出作戰地圖。<br>專注將 LLM 落地為 production 系統，服務 B2B 業務團隊的情報分析與自動化決策。<br>5 年 AI / Data Science 實戰經驗，橫跨金融業、人力資源平台、企業軟體產業。</p>
+  <p>以 Python 與 LLM 建構企業業務智慧化系統，從 CRM 資料萃取、AI 痛點分析到自動化輸出作戰地圖。<br>專注將 LLM 落地為 production 系統，服務 B2B 業務團隊的情報分析與自動化決策。<br>6–7 年 AI / Data Science 實戰經驗，橫跨金融業、人力資源平台、企業軟體產業。</p>
   <div class="tag-row">
     <span class="tag">Gemini AI</span>
     <span class="tag">Vertex AI</span>
@@ -319,18 +319,18 @@
     <ul>
       <li><strong>痛點相似比對系統</strong>：以 <strong>RAG</strong>（Retrieval-Augmented Generation）架構設計 Retrieve→Rerank→Generate 三階段管道——TF-IDF 檢索候選、行業/職能加權重排、Gemini LLM 語意評分生成——將業務日報自由文字痛點比對至結構化知識庫。<br><strong>成果</strong>：完成 226 筆日報比對、行業標記覆蓋率提升至 92.5%；以歷史資料反查驗證，發現並修正評估指標的顆粒度落差問題</li>
       <li><strong>問卷痛需分析 RAG Pipeline</strong>：整合活動報名/出席/問卷/身分四大來源，以 LLM 批次萃取角色與痛點，建立可供下游 agent 即時查詢的三層結構化知識庫，作為 <strong>RAG</strong> 架構中的 Retrieval 檢索層。<br><strong>成果</strong>：涵蓋 ~3,200 家公司彙整、~68,000 筆人員明細，每日自動增量更新，支撐下游話術推薦 agent 的檢索式生成</li>
-      <li><strong>業務日誌智慧萃取系統</strong>：以 LLM 多階段管道（Gemini 2.5 Flash, Vertex AI）自動分析業務日誌，萃取 L1–L7 七層企業客戶痛點與需求情報，ML 聚類識別法人類型，並建置每日自動增量更新的日報彙整分析系統。<br><strong>成果</strong>：分析 406 萬筆日誌明細，178,790 家企業完成屬性萃取（其中 173,376 家完成完整 L1–L7 情報），平行化處理提速 10 倍</li>
-      <li><strong>AiGP 卡關商機分析系統</strong>：每日自動分析 CRM 停滯商機，以 Gemini 2.5 Pro 並行生成個人化業務話術與活動邀約推薦。<br><strong>成果</strong>：每日處理約 220 筆商機、5–8 分鐘完成，卡關商機識別率達 97%</li>
-      <li><strong>內容自動標籤系統</strong>：結合 Gemini LLM 語意判斷與關鍵字字典，對中文文章自動生成六維標籤（場景/議題/產品/產業/職能/階段），FastAPI 提供即時分類服務。<br><strong>成果</strong>：產品標籤合法性 100% 保證，批次重新標籤降至分鐘級，標籤更新後零人工同步</li>
-      <li><strong>高價值客戶商機推薦系統</strong>：整合日報、問卷、商機等級三大訊號，設計五維度加權評分識別潛在客戶。<br><strong>成果</strong>：以歷史資料回溯驗證，推薦名單命中率達隨機挑選的 3 倍以上（Lift 3x+）</li>
-      <li><strong>CRM 智慧查詢儀表板</strong>：開發 Streamlit 儀表板，使業務主管無需 SQL 即可查詢、多維度篩選與一鍵匯出 CRM 資料。<br><strong>成果</strong>：秒級查詢回應，開機即用免工程師介入</li>
-      <li><strong>業務情報看板群</strong>：建置三個自動化情報看板（總體商業熱搜、競品負面新聞、法規商機訊號），皆由 Gemini AI 逐則分類。<br><strong>成果</strong>：每日/每週全自動更新、零後端維運，成果發布至 GitHub Pages</li>
-      <li><strong>爬蟲排程與版控平台</strong>：從零建置 Docker + Airflow + GitLab 的容器化爬蟲排程平台，涵蓋環境部署、排程設計、版控流程建立。<br><strong>成果</strong>：2 類爬蟲容器化獨立部署，排程全自動執行取代手動作業</li>
+      <li><strong>業務日誌智慧萃取系統</strong>：以 LLM 多階段管道（Gemini 2.5 Flash, Vertex AI）自動分析業務日誌，萃取 L1–L7 七層企業客戶痛點與需求情報，ML 聚類識別法人類型，產出可執行的業務作戰地圖，並建置每日自動增量更新的彙整分析系統。<br><strong>成果</strong>：分析 406 萬筆日誌明細，178,790 家企業完成屬性萃取（其中 173,376 家完成完整 L1–L7 情報），平行化處理提速 10 倍</li>
+      <li><strong>AiGP 卡關商機分析系統</strong>：每日自動分析 CRM 停滯商機，以 Gemini 2.5 Pro 多執行緒平行處理生成個人化業務話術與活動邀約推薦；評估 <strong>RAG</strong> 與 Fine-tuning 後選擇 Prompt Engineering——客戶痛點/需求/洞察已結構化存在 CRM，可直接組進 prompt 不需向量資料庫，且業務規則變動速度使 Fine-tuning 難以跟上。<br><strong>成果</strong>：每日處理約 220 筆商機、5–8 分鐘完成，卡關商機識別率達 97%</li>
+      <li><strong>內容自動標籤系統</strong>：結合 Gemini LLM 語意判斷與關鍵字字典的混合式管道，自動生成場景/議題/產品標籤；並整合四大資料來源建立企業行業代號判定系統，皆透過 FastAPI 提供即時 REST API。<br><strong>成果</strong>：六維結構化標籤（場景/議題/產品/產業/職能/階段），標籤與知識庫即時同步</li>
+      <li><strong>高價值客戶商機推薦系統</strong>：整合日報、問卷、商機等級三大訊號，設計五維度加權評分，識別有互動但尚未建立商機的潛在客戶。<br><strong>成果</strong>：以 Precision@K 與 Lift 曲線量化驗證推薦成效，命中率達隨機挑選 3 倍以上（Lift 3x+）</li>
+      <li><strong>CRM 智慧查詢儀表板</strong>：開發 Streamlit 儀表板，使業務主管無需 SQL 即可查詢、多維度篩選與一鍵匯出 CRM 資料，並設定開機自動啟動。<br><strong>成果</strong>：秒級查詢回應，降低業務主管對資料團隊的臨時查詢依賴</li>
+      <li><strong>業務情報看板群</strong>：以 Selenium 每週爬取台灣商業熱搜，建置三個自動化情報看板（總體商業趨勢、競品負面新聞、法規商機訊號），由 Gemini AI 分類彙整為 10 大主題。<br><strong>成果</strong>：全自動更新、零維運成本，成果發布至 GitHub Pages</li>
+      <li><strong>爬蟲排程與版控平台</strong>：從零建置容器化爬蟲排程平台，以 Docker 獨立容器化兩種爬蟲類型，Apache Airflow 排程（DockerOperator 啟動隔離容器、失敗自動重試與通知），並導入 GitLab 取代手動檔案上傳做版本控制。<br><strong>成果</strong>：標準化、全自動、零人工介入的排程平台，程式碼異動全程可追蹤，供團隊多人共用</li>
     </ul>
     <div class="exp-tags">
       <span>Gemini 2.5 Pro/Flash</span><span>Vertex AI</span><span>Claude API</span><span>RAG</span>
       <span>Python</span><span>FastAPI</span><span>Streamlit</span><span>SQL Server</span><span>Scikit-learn</span>
-      <span>Docker</span><span>Airflow</span><span>GitLab</span>
+      <span>Docker</span><span>Airflow</span><span>GitLab</span><span>Selenium</span><span>PostgreSQL</span>
     </div>
   </div>
 
@@ -343,13 +343,13 @@
       <div class="exp-date">2022/07 ~ 2025/06</div>
     </div>
     <ul>
-      <li><strong>帳單分期預測模型</strong>（CatBoost）：預測客戶帳單分期意願，用於優化簡訊行銷的觸及名單。<br><strong>成果</strong>：SMS 成本降低 88%，接觸客群從 17 萬縮減至 7 萬，仍涵蓋 90%+ 實際承做客戶</li>
-      <li><strong>因果推論分析</strong>（PS Matching、GRF、Logistic Regression）：檢驗特約商店分期方案與高收益產品之間的因果關係。<br><strong>成果</strong>：證明兩者呈負相關，提供經費預算編列參考</li>
-      <li><strong>RFM 客戶分群</strong>（K-means、DBSCAN）：依消費行為將循環戶分群並追蹤 QoQ 移動狀況。<br><strong>成果</strong>：識別待喚醒客群並標記對應接觸策略</li>
-      <li><strong>客戶消費分類標籤</strong>（BERT 相似度比較）：自信用卡交易文字自動辨識消費類型。<br><strong>成果</strong>：支援多標籤輸出，取代人工逐筆分類</li>
+      <li><strong>帳單分期預測模型</strong>：以 PyCaret 進行模型比較選出 CatBoost，並與 AutoKeras 建構的神經網路基準比較，於 6 個月外樣本資料驗證，用於優化簡訊行銷的觸及名單。<br><strong>成果</strong>：SMS 成本降低 88%，接觸客群從 17 萬縮減至 7 萬，仍涵蓋 90%+ 實際承做客戶</li>
+      <li><strong>因果推論分析</strong>：以 PS Matching、GRF、未配對邏輯迴歸（僅處理組）、未配對邏輯迴歸（處理組+混淆因子）交叉驗證，檢驗特約商店分期方案與高收益產品採用之間的因果關係，評估行銷企劃提出的預算增加方案。<br><strong>成果</strong>：發現兩者呈負相關，糾正行銷企劃原先的假設偏誤，提供預算編列決策依據</li>
+      <li><strong>RFM 客戶分群</strong>：比較四分位法、K-means、DBSCAN 三種分群方式，追蹤循環戶 QoQ 分群移動狀況，為高收益產品線標記流失/待喚醒客群。<br><strong>成果</strong>：識別流失客群的移動模式，產出可執行的觸及名單</li>
+      <li><strong>客戶消費分類標籤</strong>：以 BERT 語意相似度從小量標記資料自動擴充初始標籤，並支援業務驅動的重新分類與多標籤輸出。<br><strong>成果</strong>：突破規則式分類的侷限，讓行銷得以依消費行為精準鎖定客群</li>
     </ul>
     <div class="exp-tags">
-      <span>Python</span><span>CatBoost</span><span>BERT</span><span>Scikit-learn</span><span>SQL Server</span><span>Causal Inference</span>
+      <span>Python</span><span>CatBoost</span><span>PyCaret</span><span>AutoKeras</span><span>TensorFlow</span><span>PyTorch</span><span>BERT</span><span>Scikit-learn</span><span>SQL Server</span><span>Causal Inference</span>
     </div>
   </div>
 
@@ -362,13 +362,13 @@
       <div class="exp-date">2021/07 ~ 2022/06</div>
     </div>
     <ul>
-      <li><strong>職缺推薦系統</strong>（content-based，jieba 斷詞 + TF-IDF + cosine similarity）：為求職者推薦相似職缺，並導入 AWS LSHForest 進行雲端壓力測試。<br><strong>成果</strong>：從 300 萬筆職缺中即時產生個人化推薦</li>
-      <li><strong>社群文章曝光排序公式</strong>：參考 Hacker News / StackOverflow 設計公司社群特有的排序機制。<br><strong>成果</strong>：建立可規模化的文章曝光排序邏輯</li>
-      <li><strong>職缺特徵分析</strong>（PCA、K-means）：從 600 多筆職缺中萃取關鍵特徵因子。<br><strong>成果</strong>：提供職缺配對欄位設計建議</li>
-      <li><strong>職缺名稱分類</strong>（TF-IDF + SSE 最佳化 K 值）：對職缺名稱做文字聚類分析。<br><strong>成果</strong>：產出最受歡迎產業/職缺文字雲</li>
+      <li><strong>職缺推薦系統</strong>：以 jieba 精準斷詞與 TF-IDF + cosine similarity 建立 content-based 推薦引擎，調整標題與描述的權重比例以捕捉技能相似（而非僅標題相似）的職缺，並納入瀏覽/應徵等求職者行為訊號提升相關性；為擴展至 300 萬筆以上職缺規模，改以 AWS LSHForest 取代 TF-IDF。<br><strong>成果</strong>：提升推薦精準度，並讓系統具備處理全量職缺資料集的能力</li>
+      <li><strong>社群文章曝光排序公式</strong>：參考 Hacker News / StackOverflow 的排序邏輯，設計符合公司社群特性的曝光排序公式。<br><strong>成果</strong>：提升新文章的曝光機會，改善內容多樣性</li>
+      <li><strong>職缺特徵分析</strong>（PCA、K-means）：從 600 多筆職缺中萃取雇主需求與職缺特徵的關鍵因子。<br><strong>成果</strong>：提供配對平台欄位設計建議</li>
+      <li><strong>職缺名稱分類</strong>：以停用詞/同義詞/自訂詞典斷詞後計算 TF-IDF，並以 SSE 最佳化分群數 K。<br><strong>成果</strong>：產出最受歡迎產業/職缺的分群文字雲，用於趨勢分析</li>
     </ul>
     <div class="exp-tags">
-      <span>Python</span><span>NLP</span><span>TF-IDF</span><span>Recommender System</span><span>PCA</span><span>AWS</span>
+      <span>Python</span><span>NLP</span><span>TF-IDF</span><span>Recommender System</span><span>PCA</span><span>AWS</span><span>SQL</span><span>R</span><span>Google Analytics</span><span>SimilarWeb</span>
     </div>
   </div>
 
@@ -381,10 +381,10 @@
       <div class="exp-date">2020/01 ~ 2020/09</div>
     </div>
     <ul>
-      <li><strong>中風因子預測模型</strong>：以無母數分析（Kruskal-Wallis Test、Wilcoxon signed test、Friedman's test）視覺化生化因子隨時間的變化趨勢。<br><strong>成果</strong>：發現數個生化因子在中風前即有明顯偏離正常值</li>
+      <li><strong>中風因子預測模型</strong>：以無母數分析（Kruskal-Wallis Test、Wilcoxon signed test、Friedman's test）視覺化生化因子隨時間的變化趨勢，及早找出中風高風險的生化指標。<br><strong>成果</strong>：發現數個生化因子在中風前即有明顯偏離正常值，分析深度超越同類國際研究</li>
     </ul>
     <div class="exp-tags">
-      <span>R</span><span>Non-parametric Test</span><span>Statistical Analysis</span>
+      <span>R</span><span>Python</span><span>SPSS</span><span>Non-parametric Test</span><span>Statistical Analysis</span>
     </div>
   </div>
 
@@ -397,11 +397,11 @@
       <div class="exp-date">2018/06 ~ 2019/12</div>
     </div>
     <ul>
-      <li><strong>失智症回顧研究</strong>：以無母數分析、多元邏輯式迴歸、ROC 分析建立切點。<br><strong>成果</strong>：協助評估病患狀態以利早期治療</li>
-      <li><strong>2019 年心理師研討會發表</strong>：分析 12 項字彙學習測驗。<br><strong>成果</strong>：驗證其篩選輕度認知障礙與失智症之效用</li>
+      <li><strong>失智症回顧研究</strong>：以無母數分析（Kruskal-Wallis Test）、多元邏輯迴歸、ROC 分析，於不同病患嚴重程度分組間建立切點，支援醫師與心理師的臨床診斷。<br><strong>成果</strong>：經臨床主任驗證為可靠的診斷參考依據</li>
+      <li><strong>2019 年心理師研討會發表</strong>：分析 12 項字彙學習測驗篩選輕度認知障礙與失智症之效用。<br><strong>成果</strong>：於 2019 年心理師研討會發表研究成果</li>
     </ul>
     <div class="exp-tags">
-      <span>R</span><span>Logistic Regression</span><span>ROC Analysis</span><span>Non-parametric Test</span>
+      <span>R</span><span>SPSS</span><span>Logistic Regression</span><span>ROC Analysis</span><span>Non-parametric Test</span>
     </div>
   </div>
 
