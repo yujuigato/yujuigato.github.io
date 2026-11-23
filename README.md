@@ -17,7 +17,7 @@
 | 專案 | 說明 | 連結 |
 |---|---|---|
 | AiGP Opportunity Coach | AI 分析 CRM 停滯商機，生成個人化業務話術 | [查看](https://yujuigato.github.io/AiGP-opportunity-coach/) |
-| Pain-Point Intelligence Map | LLM 萃取 17 萬筆業務日誌的七層銷售情報 | [查看](https://yujuigato.github.io/llm-bizlog-report/) |
+| Bizlog Pain-Need Extraction Pipeline | LLM 萃取 17 萬筆業務日誌的七層銷售情報 | [查看](https://yujuigato.github.io/llm-bizlog-report/) |
 | AI Content Auto-Labeling | LLM + 關鍵字混合引擎自動為文章打三層標籤 | [查看](https://yujuigato.github.io/content-auto-labeling/) |
 | Opportunity Recommender | 五維度評分識別高價值潛在客戶 | [查看](https://yujuigato.github.io/customer-opportunity-scorer/) |
 | Streamlit CRM Dashboard | 零 SQL 業務自助查詢儀表板 | [查看](https://yujuigato.github.io/crm-dashboard/) |
