@@ -382,9 +382,13 @@
       </div>
       <div class="exp-date">2022/07 ~ 2025/06</div>
     </div>
+    <div class="exp-cat">預測建模與因果推論</div>
     <ul>
       <li><strong>帳單分期預測模型</strong>：以 PyCaret 進行模型比較選出 CatBoost，並與 AutoKeras 建構的神經網路基準比較，於 6 個月外樣本資料驗證，用於優化簡訊行銷的觸及名單。<br><strong>成果</strong>：SMS 成本降低近九成，接觸客群縮減逾五成，仍涵蓋九成以上實際承做客戶</li>
       <li><strong>因果推論分析</strong>：以 PS Matching、GRF、未配對邏輯迴歸（僅處理組）、未配對邏輯迴歸（處理組+混淆因子）交叉驗證，檢驗特約商店分期方案與高收益產品採用之間的因果關係，評估行銷企劃提出的預算增加方案。<br><strong>成果</strong>：發現兩者呈負相關，糾正行銷企劃原先的假設偏誤，提供預算編列決策依據</li>
+    </ul>
+    <div class="exp-cat">客戶分群與標籤</div>
+    <ul>
       <li><strong>RFM 客戶分群</strong>：比較四分位法、K-means、DBSCAN 三種分群方式，追蹤循環戶 QoQ 分群移動狀況，為高收益產品線標記流失/待喚醒客群。<br><strong>成果</strong>：識別流失客群的移動模式，產出可執行的觸及名單</li>
       <li><strong>客戶消費分類標籤</strong>：以 BERT 語意相似度從小量標記資料自動擴充初始標籤，並支援業務驅動的重新分類與多標籤輸出。<br><strong>成果</strong>：突破規則式分類的侷限，讓行銷得以依消費行為精準鎖定客群</li>
     </ul>
@@ -401,9 +405,13 @@
       </div>
       <div class="exp-date">2021/07 ~ 2022/06</div>
     </div>
+    <div class="exp-cat">推薦與排序系統</div>
     <ul>
       <li><strong>職缺推薦系統</strong>：以 jieba 精準斷詞與 TF-IDF + cosine similarity 建立 content-based 推薦引擎，調整標題與描述的權重比例以捕捉技能相似（而非僅標題相似）的職缺，並納入瀏覽/應徵等求職者行為訊號提升相關性；為擴展至百萬筆以上職缺規模，改以 AWS LSHForest 取代 TF-IDF。<br><strong>成果</strong>：提升推薦精準度，並讓系統具備處理全量職缺資料集的能力</li>
       <li><strong>社群文章曝光排序公式</strong>：參考 Hacker News / StackOverflow 的排序邏輯，設計符合公司社群特性的曝光排序公式。<br><strong>成果</strong>：提升新文章的曝光機會，改善內容多樣性</li>
+    </ul>
+    <div class="exp-cat">文字與特徵分析</div>
+    <ul>
       <li><strong>職缺特徵分析</strong>（PCA、K-means）：從數百筆職缺中萃取雇主需求與職缺特徵的關鍵因子。<br><strong>成果</strong>：提供配對平台欄位設計建議</li>
       <li><strong>職缺名稱分類</strong>：以停用詞/同義詞/自訂詞典斷詞後計算 TF-IDF，並以 SSE 最佳化分群數 K。<br><strong>成果</strong>：產出最受歡迎產業/職缺的分群文字雲，用於趨勢分析</li>
     </ul>
