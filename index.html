@@ -100,7 +100,7 @@
     <span class="tag">Prompt Engineering</span>
   </div>
   <div class="stat-row">
-    <div class="stat"><div class="num">9</div><div class="lbl">系統專案</div></div>
+    <div class="stat"><div class="num">10</div><div class="lbl">系統專案</div></div>
     <div class="stat"><div class="num">數十萬</div><div class="lbl">企業資料分析</div></div>
     <div class="stat"><div class="num">4 個</div><div class="lbl">LLM 應用</div></div>
     <div class="stat"><div class="num">全自動</div><div class="lbl">端到端流程</div></div>
@@ -162,7 +162,7 @@
 
   </div>
 
-  <div class="section-label">Projects</div>
+  <div class="section-label">AI 銷售決策與推薦</div>
   <div class="projects">
 
     <a class="project-card" href="https://yujuigato.github.io/AiGP-opportunity-coach/" style="--accent-color:linear-gradient(90deg,#2563eb,#7c3aed);">
@@ -175,20 +175,6 @@
       <div class="card-desc">自動分析 CRM 停滯商機，AI 判斷卡關原因、生成個人化業務話術，並依客戶地區推薦最適活動。每日數百筆，數分鐘完成。</div>
       <div class="card-footer">
         <span>Gemini 2.5 Pro · Python · SQL Server</span>
-        <span class="card-link">查看專案</span>
-      </div>
-    </a>
-
-    <a class="project-card" href="https://yujuigato.github.io/content-auto-labeling/"style="--accent-color:linear-gradient(90deg,#0891b2,#7c3aed);">
-      <div class="card-top">
-        <div class="card-icon">🏷️</div>
-        <div class="card-tags"><span class="card-tag">FastAPI</span><span class="card-tag">混合式</span></div>
-      </div>
-      <div class="card-title">內容自動標籤系統</div>
-      <div class="card-subtitle">AI Content Auto-Labeling</div>
-      <div class="card-desc">內容自動標籤 + 法人產行業標籤雙子系統。前者由 LLM 語意判斷場景與議題、關鍵字比對產品標籤，混合引擎取長補短；後者整合四大來源自動判定企業行業代號。FastAPI 即時 REST API，自動同步知識庫。</div>
-      <div class="card-footer">
-        <span>Gemini Flash · FastAPI · MySQL</span>
         <span class="card-link">查看專案</span>
       </div>
     </a>
@@ -206,6 +192,58 @@
         <span class="card-link">查看專案</span>
       </div>
     </a>
+
+    <a class="project-card" href="/pain-point-similarity-matching/" style="--accent-color:linear-gradient(90deg,#7c3aed,#db2777);">
+      <div class="card-top">
+        <div class="card-icon">🔍</div>
+        <div class="card-tags"><span class="card-tag">RAG</span><span class="card-tag">反查驗證</span></div>
+      </div>
+      <div class="card-title">痛點相似比對系統</div>
+      <div class="card-subtitle">Pain-Point Similarity Matching</div>
+      <div class="card-desc">RAG 式 Retrieve→Rerank→Generate 設計：TF-IDF 檢索 → 行業/職能加權重排 → LLM 語意評分，將業務日報痛點比對至結構化知識庫，並以歷史資料反查找出評估指標本身的盲點。</div>
+      <div class="card-footer">
+        <span>RAG · TF-IDF · Gemini LLM</span>
+        <span class="card-link">查看專案</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-label">資料與內容基礎建設</div>
+  <div class="projects">
+
+    <a class="project-card" href="https://yujuigato.github.io/content-auto-labeling/"style="--accent-color:linear-gradient(90deg,#0891b2,#7c3aed);">
+      <div class="card-top">
+        <div class="card-icon">🏷️</div>
+        <div class="card-tags"><span class="card-tag">FastAPI</span><span class="card-tag">混合式</span></div>
+      </div>
+      <div class="card-title">內容自動標籤系統</div>
+      <div class="card-subtitle">AI Content Auto-Labeling</div>
+      <div class="card-desc">內容自動標籤 + 法人產行業標籤雙子系統。前者由 LLM 語意判斷場景與議題、關鍵字比對產品標籤，混合引擎取長補短；後者整合四大來源自動判定企業行業代號。FastAPI 即時 REST API，自動同步知識庫。</div>
+      <div class="card-footer">
+        <span>Gemini Flash · FastAPI · MySQL</span>
+        <span class="card-link">查看專案</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="/scraper-orchestration-platform/" style="--accent-color:linear-gradient(90deg,#334155,#2563eb);">
+      <div class="card-top">
+        <div class="card-icon">🐳</div>
+        <div class="card-tags"><span class="card-tag">DevOps</span><span class="card-tag">容器化</span></div>
+      </div>
+      <div class="card-title">爬蟲排程與版控平台</div>
+      <div class="card-subtitle">Scraper Orchestration Platform</div>
+      <div class="card-desc">從零建置容器化爬蟲排程平台：Docker 隔離執行環境、Airflow 排程自動觸發、GitLab 版本控制，取代原本手動執行、無版控的作業方式。</div>
+      <div class="card-footer">
+        <span>Docker · Airflow · GitLab</span>
+        <span class="card-link">查看專案</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-label">儀表板與情報看板</div>
+  <div class="projects">
 
     <a class="project-card" href="https://yujuigato.github.io/crm-dashboard/" style="--accent-color:linear-gradient(90deg,#1d4ed8,#059669);">
       <div class="card-top">
@@ -231,34 +269,6 @@
       <div class="card-desc">總體商業環境熱搜監測、競品負面新聞監控、法規商機訊號偵測，三個看板皆由 Gemini AI 逐則分類，GitHub Pages 全自動發布。</div>
       <div class="card-footer">
         <span>Gemini AI · Selenium · GitHub Pages</span>
-        <span class="card-link">查看專案</span>
-      </div>
-    </a>
-
-    <a class="project-card" href="/pain-point-similarity-matching/" style="--accent-color:linear-gradient(90deg,#7c3aed,#db2777);">
-      <div class="card-top">
-        <div class="card-icon">🔍</div>
-        <div class="card-tags"><span class="card-tag">RAG</span><span class="card-tag">反查驗證</span></div>
-      </div>
-      <div class="card-title">痛點相似比對系統</div>
-      <div class="card-subtitle">Pain-Point Similarity Matching</div>
-      <div class="card-desc">RAG 式 Retrieve→Rerank→Generate 設計：TF-IDF 檢索 → 行業/職能加權重排 → LLM 語意評分，將業務日報痛點比對至結構化知識庫，並以歷史資料反查找出評估指標本身的盲點。</div>
-      <div class="card-footer">
-        <span>RAG · TF-IDF · Gemini LLM</span>
-        <span class="card-link">查看專案</span>
-      </div>
-    </a>
-
-    <a class="project-card" href="/scraper-orchestration-platform/" style="--accent-color:linear-gradient(90deg,#334155,#2563eb);">
-      <div class="card-top">
-        <div class="card-icon">🐳</div>
-        <div class="card-tags"><span class="card-tag">DevOps</span><span class="card-tag">容器化</span></div>
-      </div>
-      <div class="card-title">爬蟲排程與版控平台</div>
-      <div class="card-subtitle">Scraper Orchestration Platform</div>
-      <div class="card-desc">從零建置容器化爬蟲排程平台：Docker 隔離執行環境、Airflow 排程自動觸發、GitLab 版本控制，取代原本手動執行、無版控的作業方式。</div>
-      <div class="card-footer">
-        <span>Docker · Airflow · GitLab</span>
         <span class="card-link">查看專案</span>
       </div>
     </a>
