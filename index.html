@@ -65,6 +65,8 @@
     .exp-title{font-size:.85rem;opacity:.7;}
     .exp-date{font-size:.8rem;opacity:.6;white-space:nowrap;}
     .exp-desc{font-size:.88rem;opacity:.8;margin-bottom:8px;line-height:1.6;}
+    .exp-cat{font-size:.72rem;font-weight:700;letter-spacing:.1em;color:var(--primary);margin:18px 0 6px;}
+    .exp-cat:first-of-type{margin-top:6px;}
     .exp-item ul{padding-left:1.1rem;margin-bottom:10px;}
     .exp-item ul li{font-size:.85rem;opacity:.85;line-height:1.7;margin-bottom:3px;}
     .exp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
@@ -345,15 +347,25 @@
       </div>
       <div class="exp-date">2025/09 ~ Present</div>
     </div>
+    <div class="exp-cat">LLM 痛點與需求萃取</div>
     <ul>
-      <li><strong>痛點相似比對系統</strong>：以 <strong>RAG</strong>（Retrieval-Augmented Generation）架構設計 Retrieve→Rerank→Generate 三階段管道——Stage 1 以字元 n-gram TF-IDF 從千餘筆知識庫檢索出前 100 名候選，Stage 2 依行業/職能加權重排至前 20 名，Stage 3 由 Gemini LLM 逐一語意評分；並設計三層 fallback（ID 比對→名稱比對→LLM 推斷）補齊客戶缺漏的行業標記，覆蓋率由 66.8% 提升至 92.5%；發現「對照舊人工標記的命中率」本身是顆粒度不對等、會失真的評估指標，改以分數級距分層抽樣供人工審核。<br><strong>成果</strong>：完成數百筆日報比對；以歷史資料反查驗證，修正了評估方法本身的系統性偏誤，而非直接採信表面偏低、具誤導性的命中率數字</li>
       <li><strong>痛需萃取系統（業務日誌／問卷／PASS 單）</strong>：針對 CRM 三大客戶訊號來源，建立同一套「清理 → 分類 → LLM 萃取 L1–L7 七層痛點與需求 → 公司彙整」架構，產出明細、公司彙整、月度整合與歷史快照等結構化表，每日排程自動增量更新並於失敗時信件通知。<br>① <strong>業務日誌</strong>：以 LLM 多階段管道（Gemini 2.5 Flash, Vertex AI）分析業務日誌，ML 聚類識別法人類型，產出可執行的業務作戰地圖。<br>② <strong>問卷</strong>：整合活動報名、實際出席、問卷作答、聯絡人資訊四大來源，以「公司×活動×年月」組成 session，用 Gemini Flash Lite 批次萃取角色、痛點、需求與購買階段，作為下游話術推薦 agent 的 <strong>RAG</strong> 檢索層；設計三層快取控制大規模 LLM 成本。<br>③ <strong>PASS 單</strong>：清理電銷轉業務的 PASS 單（重複單偵測、轉介套語過濾、範本欄位拆解），規則分類 PASS 類型並以 LLM 萃取 L1–L7，串接日報、商機、成交，彙整成客戶五階段。<br><strong>成果</strong>：日誌分析達百萬筆級資料、十萬家以上企業完成屬性與 L1–L7 情報萃取，平行化處理大幅提速；問卷知識庫涵蓋數千家公司、數萬筆人員明細，供下游 agent 依潛客代號即時查詢；PASS 單數萬張彙整為客戶五階段與四張分析表，三條線皆全自動每日更新</li>
+    </ul>
+    <div class="exp-cat">AI 銷售決策與推薦</div>
+    <ul>
       <li><strong>AiGP 卡關商機分析系統</strong>：每日自動分析 CRM 停滯商機，以 Gemini 2.5 Pro 多執行緒平行處理生成個人化業務話術與活動邀約推薦；評估 <strong>RAG</strong> 與 Fine-tuning 後選擇 Prompt Engineering——客戶痛點/需求/洞察已結構化存在 CRM，可直接組進 prompt 不需向量資料庫，且業務規則變動速度使 Fine-tuning 難以跟上。<br><strong>成果</strong>：每日處理數百筆商機、數分鐘完成，卡關商機識別率達 97%</li>
-      <li><strong>內容自動標籤系統</strong>：結合 Gemini LLM 語意判斷與關鍵字字典的混合式管道，自動生成場景/議題/產品標籤；並整合四大資料來源建立企業行業代號判定系統，皆透過 FastAPI 提供即時 REST API。<br><strong>成果</strong>：六維結構化標籤（場景/議題/產品/產業/職能/階段），標籤與知識庫即時同步</li>
       <li><strong>高價值客戶商機推薦系統</strong>：整合業務拜訪日報、問卷萃取的 L1–L7 痛點/需求資料、商機等級三大訊號，設計五維度加權評分（商機等級 ×2、觸及最深 L 層級 ×1.5、跨來源痛點相似度 ×1、近期活躍度 ×1、時近性 ×1）識別有互動但尚未建立商機的潛在客戶，其中跨來源一致性比對日報與問卷的痛點描述，過濾單方面訊號、確認真實需求。<br><strong>成果</strong>：以回溯測試搭配 Precision@K 與 Lift 曲線驗證推薦成效，達 3 倍以上 Lift（推薦名單轉換率為隨機挑選的 3 倍），並依業務員產生個人化推薦名單</li>
+      <li><strong>痛點相似比對系統</strong>：以 <strong>RAG</strong>（Retrieval-Augmented Generation）架構設計 Retrieve→Rerank→Generate 三階段管道——Stage 1 以字元 n-gram TF-IDF 從千餘筆知識庫檢索出前 100 名候選，Stage 2 依行業/職能加權重排至前 20 名，Stage 3 由 Gemini LLM 逐一語意評分；並設計三層 fallback（ID 比對→名稱比對→LLM 推斷）補齊客戶缺漏的行業標記，覆蓋率由 66.8% 提升至 92.5%；發現「對照舊人工標記的命中率」本身是顆粒度不對等、會失真的評估指標，改以分數級距分層抽樣供人工審核。<br><strong>成果</strong>：完成數百筆日報比對；以歷史資料反查驗證，修正了評估方法本身的系統性偏誤，而非直接採信表面偏低、具誤導性的命中率數字</li>
+    </ul>
+    <div class="exp-cat">資料與內容基礎建設</div>
+    <ul>
+      <li><strong>內容自動標籤系統</strong>：結合 Gemini LLM 語意判斷與關鍵字字典的混合式管道，自動生成場景/議題/產品標籤；並整合四大資料來源建立企業行業代號判定系統，皆透過 FastAPI 提供即時 REST API。<br><strong>成果</strong>：六維結構化標籤（場景/議題/產品/產業/職能/階段），標籤與知識庫即時同步</li>
+      <li><strong>爬蟲排程與版控平台</strong>：從零建置容器化爬蟲排程平台，以 Docker 獨立容器化兩種爬蟲類型，Apache Airflow 排程（DockerOperator 啟動隔離容器、失敗自動重試與通知），並導入 GitLab 取代手動檔案上傳做版本控制。<br><strong>成果</strong>：標準化、全自動、零人工介入的排程平台，程式碼異動全程可追蹤，供團隊多人共用</li>
+    </ul>
+    <div class="exp-cat">儀表板與情報看板</div>
+    <ul>
       <li><strong>CRM 智慧查詢儀表板</strong>：開發 Streamlit 儀表板，使業務主管無需 SQL 即可查詢、多維度篩選與一鍵匯出 CRM 資料，並設定開機自動啟動。<br><strong>成果</strong>：秒級查詢回應，降低業務主管對資料團隊的臨時查詢依賴</li>
       <li><strong>業務情報看板群</strong>：以 Selenium 每週爬取台灣商業熱搜，建置三個自動化情報看板（總體商業趨勢、競品負面新聞、法規商機訊號），由 Gemini AI 分類彙整為 10 大主題。<br><strong>成果</strong>：全自動更新、零維運成本，成果發布至 GitHub Pages</li>
-      <li><strong>爬蟲排程與版控平台</strong>：從零建置容器化爬蟲排程平台，以 Docker 獨立容器化兩種爬蟲類型，Apache Airflow 排程（DockerOperator 啟動隔離容器、失敗自動重試與通知），並導入 GitLab 取代手動檔案上傳做版本控制。<br><strong>成果</strong>：標準化、全自動、零人工介入的排程平台，程式碼異動全程可追蹤，供團隊多人共用</li>
     </ul>
     <div class="exp-tags">
       <span>Gemini 2.5 Pro/Flash</span><span>Vertex AI</span><span>Claude API</span><span>RAG</span>
