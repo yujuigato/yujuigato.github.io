@@ -121,8 +121,8 @@
   </div>
   <div class="hero-stats">
     <div class="hero-stat"><div class="num">3 階段</div><div class="lbl">粗篩 → 加權重排 → 語意評分</div></div>
-    <div class="hero-stat"><div class="num">226 筆</div><div class="lbl">業務拜訪紀錄比對</div></div>
-    <div class="hero-stat"><div class="num">1,556 筆</div><div class="lbl">痛點知識庫（去重）</div></div>
+    <div class="hero-stat"><div class="num">數百筆</div><div class="lbl">業務拜訪紀錄比對</div></div>
+    <div class="hero-stat"><div class="num">千餘筆</div><div class="lbl">痛點知識庫（去重）</div></div>
     <div class="hero-stat"><div class="num">92.5%</div><div class="lbl">客戶行業標記覆蓋率</div></div>
   </div>
 </header>
@@ -167,7 +167,7 @@
     <div class="mermaid">
 flowchart TD
     A["📝 業務日報\n客戶痛點原文"] --> B["Stage 1\nTF-IDF 字元 n-gram 粗篩"]
-    K["📚 痛點知識庫\n約 1,556 筆（去重）"] --> B
+    K["📚 痛點知識庫\n千餘筆（去重）"] --> B
     B --> C["候選前 100 筆"]
     C --> D["Stage 2\n行業／職能加權重排"]
     D --> E["候選前 20 筆"]
@@ -239,7 +239,7 @@ flowchart LR
 <section>
   <div class="section-label">Validation · 最有價值的部分</div>
   <h2>用真實資料反查驗證，找到評估方法本身的盲點</h2>
-  <p class="section-desc">系統上線前，我把比對結果拿去跟過去人工標記在客戶身上的舊痛點代號做反查驗證：AI 對 226 筆日報總共預測出 168 筆比對結果，但直接命中舊人工標記的只有 3 筆——乍看之下命中率低到不可用。但深入分析後發現，問題不在比對演算法，而在「拿什麼當標準答案」這件事本身就有問題。</p>
+  <p class="section-desc">系統上線前，我把比對結果拿去跟過去人工標記在客戶身上的舊痛點代號做反查驗證：AI 對數百筆日報預測出近兩百筆比對結果，但直接命中舊人工標記的僅個位數筆——乍看之下命中率低到不可用。但深入分析後發現，問題不在比對演算法，而在「拿什麼當標準答案」這件事本身就有問題。</p>
   <div class="finding-box">
     <h4>⚠️ 為什麼「命中率」這個指標會誤導人</h4>
     <p style="font-size:.92rem;color:#374151;margin-top:6px;line-height:1.8;">
@@ -316,8 +316,8 @@ flowchart LR
   <div class="section-label">Results</div>
   <h2>系統規模與成果</h2>
   <div class="stat-grid">
-    <div class="stat-card"><div class="number">226 筆</div><div class="label">業務拜訪紀錄完成比對</div></div>
-    <div class="stat-card"><div class="number">1,556 筆</div><div class="label">痛點知識庫（去重後）</div></div>
+    <div class="stat-card"><div class="number">數百筆</div><div class="label">業務拜訪紀錄完成比對</div></div>
+    <div class="stat-card"><div class="number">千餘筆</div><div class="label">痛點知識庫（去重後）</div></div>
     <div class="stat-card"><div class="number">92.5%</div><div class="label">客戶行業標記覆蓋率</div></div>
     <div class="stat-card"><div class="number">3 → 1</div><div class="label">從 3 階段漏斗收斂到最終比對結果</div></div>
   </div>

@@ -101,7 +101,7 @@
   </div>
   <div class="stat-row">
     <div class="stat"><div class="num">9</div><div class="lbl">系統專案</div></div>
-    <div class="stat"><div class="num">304K+</div><div class="lbl">企業資料分析</div></div>
+    <div class="stat"><div class="num">數十萬</div><div class="lbl">企業資料分析</div></div>
     <div class="stat"><div class="num">4 個</div><div class="lbl">LLM 應用</div></div>
     <div class="stat"><div class="num">全自動</div><div class="lbl">端到端流程</div></div>
   </div>
@@ -121,11 +121,11 @@
     <a class="project-card" href="https://yujuigato.github.io/llm-bizlog-report/" style="--accent-color:linear-gradient(90deg,#7c3aed,#2563eb);">
       <div class="card-top">
         <div class="card-icon">🧠</div>
-        <div class="card-tags"><span class="card-tag">304K 企業</span><span class="card-tag">5 Phase</span></div>
+        <div class="card-tags"><span class="card-tag">數十萬企業</span><span class="card-tag">5 Phase</span></div>
       </div>
       <div class="card-title">業務日誌痛需萃取系統</div>
       <div class="card-subtitle">Bizlog Pain-Need Extraction Pipeline</div>
-      <div class="card-desc">從 406 萬筆業務日誌以 LLM 多階段管道萃取 L1–L7 七層銷售情報，ML 聚類生成痛需熱圖；新增日報彙整分析系統，每日自動增量更新。</div>
+      <div class="card-desc">從百萬筆級業務日誌以 LLM 多階段管道萃取 L1–L7 七層銷售情報，ML 聚類生成痛需熱圖；新增日報彙整分析系統，每日自動增量更新。</div>
       <div class="card-footer">
         <span>Gemini 2.5 Flash · Scikit-learn · Plotly</span>
         <span class="card-link">查看專案</span>
@@ -135,11 +135,11 @@
     <a class="project-card" href="https://yujuigato.github.io/pass-flow-report/" style="--accent-color:linear-gradient(90deg,#2563eb,#10b981);">
       <div class="card-top">
         <div class="card-icon">🎫</div>
-        <div class="card-tags"><span class="card-tag">37K PASS 單</span><span class="card-tag">4 張表</span></div>
+        <div class="card-tags"><span class="card-tag">數萬張 PASS 單</span><span class="card-tag">4 張表</span></div>
       </div>
       <div class="card-title">PASS 單痛需萃取系統</div>
       <div class="card-subtitle">PASS Pain-Need Extraction Pipeline</div>
-      <div class="card-desc">把 CRM 電銷轉業務的 PASS 單清理、規則分類並以 LLM 萃取 L1–L7，串接日報、商機、成交，彙整成法人五階段與四張分析表。</div>
+      <div class="card-desc">把 CRM 電銷轉業務的 PASS 單清理、規則分類並以 LLM 萃取 L1–L7，串接日報、商機、成交，彙整成客戶五階段與四張分析表。</div>
       <div class="card-footer">
         <span>SQL · Rules · Gemini · Python</span>
         <span class="card-link">查看專案</span>
@@ -172,7 +172,7 @@
       </div>
       <div class="card-title">AiGP 卡關商機分析系統</div>
       <div class="card-subtitle">AiGP Opportunity Coach</div>
-      <div class="card-desc">自動分析 CRM 停滯商機，AI 判斷卡關原因、生成個人化業務話術，並依客戶地區推薦最適活動。每日 ~220 筆，5–8 分鐘完成。</div>
+      <div class="card-desc">自動分析 CRM 停滯商機，AI 判斷卡關原因、生成個人化業務話術，並依客戶地區推薦最適活動。每日數百筆，數分鐘完成。</div>
       <div class="card-footer">
         <span>Gemini 2.5 Pro · Python · SQL Server</span>
         <span class="card-link">查看專案</span>
@@ -336,9 +336,9 @@
       <div class="exp-date">2025/09 ~ Present</div>
     </div>
     <ul>
-      <li><strong>痛點相似比對系統</strong>：以 <strong>RAG</strong>（Retrieval-Augmented Generation）架構設計 Retrieve→Rerank→Generate 三階段管道——Stage 1 以字元 n-gram TF-IDF 從 1,556 筆知識庫檢索出前 100 名候選，Stage 2 依行業/職能加權重排至前 20 名，Stage 3 由 Gemini LLM 逐一語意評分；並設計三層 fallback（ID 比對→名稱比對→LLM 推斷）補齊客戶缺漏的行業標記，覆蓋率由 66.8% 提升至 92.5%；發現「對照舊人工標記的命中率」本身是顆粒度不對等、會失真的評估指標，改以分數級距分層抽樣供人工審核。<br><strong>成果</strong>：完成 226 筆日報比對；以歷史資料反查驗證，修正了評估方法本身的系統性偏誤，而非直接採信表面偏低、具誤導性的命中率數字</li>
-      <li><strong>痛需萃取系統（業務日誌／問卷／PASS 單）</strong>：針對 CRM 三大客戶訊號來源，建立同一套「清理 → 分類 → LLM 萃取 L1–L7 七層痛點與需求 → 公司彙整」架構，產出明細、公司彙整、月度整合與歷史快照等結構化表，每日排程自動增量更新並於失敗時信件通知。<br>① <strong>業務日誌</strong>：以 LLM 多階段管道（Gemini 2.5 Flash, Vertex AI）分析業務日誌，ML 聚類識別法人類型，產出可執行的業務作戰地圖。<br>② <strong>問卷</strong>：整合活動報名、實際出席、問卷作答、聯絡人資訊四大來源，以「公司×活動×年月」組成 session，用 Gemini Flash Lite 批次萃取角色、痛點、需求與購買階段，作為下游話術推薦 agent 的 <strong>RAG</strong> 檢索層；設計三層快取控制大規模 LLM 成本。<br>③ <strong>PASS 單</strong>：清理電銷轉業務的 PASS 單（重複單偵測、轉介套語過濾、範本欄位拆解），規則分類 PASS 類型並以 LLM 萃取 L1–L7，串接日報、商機、成交，彙整成法人五階段。<br><strong>成果</strong>：日誌分析 406 萬筆、178,790 家企業完成屬性萃取（其中 173,376 家完成完整 L1–L7），平行化處理提速 10 倍；問卷知識庫涵蓋 ~3,200 家公司、~68,000 筆人員明細，供下游 agent 依潛客代號即時查詢；PASS 單約 3.7 萬張彙整為法人五階段與四張分析表，三條線皆全自動每日更新</li>
-      <li><strong>AiGP 卡關商機分析系統</strong>：每日自動分析 CRM 停滯商機，以 Gemini 2.5 Pro 多執行緒平行處理生成個人化業務話術與活動邀約推薦；評估 <strong>RAG</strong> 與 Fine-tuning 後選擇 Prompt Engineering——客戶痛點/需求/洞察已結構化存在 CRM，可直接組進 prompt 不需向量資料庫，且業務規則變動速度使 Fine-tuning 難以跟上。<br><strong>成果</strong>：每日處理約 220 筆商機、5–8 分鐘完成，卡關商機識別率達 97%</li>
+      <li><strong>痛點相似比對系統</strong>：以 <strong>RAG</strong>（Retrieval-Augmented Generation）架構設計 Retrieve→Rerank→Generate 三階段管道——Stage 1 以字元 n-gram TF-IDF 從千餘筆知識庫檢索出前 100 名候選，Stage 2 依行業/職能加權重排至前 20 名，Stage 3 由 Gemini LLM 逐一語意評分；並設計三層 fallback（ID 比對→名稱比對→LLM 推斷）補齊客戶缺漏的行業標記，覆蓋率由 66.8% 提升至 92.5%；發現「對照舊人工標記的命中率」本身是顆粒度不對等、會失真的評估指標，改以分數級距分層抽樣供人工審核。<br><strong>成果</strong>：完成數百筆日報比對；以歷史資料反查驗證，修正了評估方法本身的系統性偏誤，而非直接採信表面偏低、具誤導性的命中率數字</li>
+      <li><strong>痛需萃取系統（業務日誌／問卷／PASS 單）</strong>：針對 CRM 三大客戶訊號來源，建立同一套「清理 → 分類 → LLM 萃取 L1–L7 七層痛點與需求 → 公司彙整」架構，產出明細、公司彙整、月度整合與歷史快照等結構化表，每日排程自動增量更新並於失敗時信件通知。<br>① <strong>業務日誌</strong>：以 LLM 多階段管道（Gemini 2.5 Flash, Vertex AI）分析業務日誌，ML 聚類識別法人類型，產出可執行的業務作戰地圖。<br>② <strong>問卷</strong>：整合活動報名、實際出席、問卷作答、聯絡人資訊四大來源，以「公司×活動×年月」組成 session，用 Gemini Flash Lite 批次萃取角色、痛點、需求與購買階段，作為下游話術推薦 agent 的 <strong>RAG</strong> 檢索層；設計三層快取控制大規模 LLM 成本。<br>③ <strong>PASS 單</strong>：清理電銷轉業務的 PASS 單（重複單偵測、轉介套語過濾、範本欄位拆解），規則分類 PASS 類型並以 LLM 萃取 L1–L7，串接日報、商機、成交，彙整成客戶五階段。<br><strong>成果</strong>：日誌分析達百萬筆級資料、十萬家以上企業完成屬性與 L1–L7 情報萃取，平行化處理大幅提速；問卷知識庫涵蓋數千家公司、數萬筆人員明細，供下游 agent 依潛客代號即時查詢；PASS 單數萬張彙整為客戶五階段與四張分析表，三條線皆全自動每日更新</li>
+      <li><strong>AiGP 卡關商機分析系統</strong>：每日自動分析 CRM 停滯商機，以 Gemini 2.5 Pro 多執行緒平行處理生成個人化業務話術與活動邀約推薦；評估 <strong>RAG</strong> 與 Fine-tuning 後選擇 Prompt Engineering——客戶痛點/需求/洞察已結構化存在 CRM，可直接組進 prompt 不需向量資料庫，且業務規則變動速度使 Fine-tuning 難以跟上。<br><strong>成果</strong>：每日處理數百筆商機、數分鐘完成，卡關商機識別率達 97%</li>
       <li><strong>內容自動標籤系統</strong>：結合 Gemini LLM 語意判斷與關鍵字字典的混合式管道，自動生成場景/議題/產品標籤；並整合四大資料來源建立企業行業代號判定系統，皆透過 FastAPI 提供即時 REST API。<br><strong>成果</strong>：六維結構化標籤（場景/議題/產品/產業/職能/階段），標籤與知識庫即時同步</li>
       <li><strong>高價值客戶商機推薦系統</strong>：整合業務拜訪日報、問卷萃取的 L1–L7 痛點/需求資料、商機等級三大訊號，設計五維度加權評分（商機等級 ×2、觸及最深 L 層級 ×1.5、跨來源痛點相似度 ×1、近期活躍度 ×1、時近性 ×1）識別有互動但尚未建立商機的潛在客戶，其中跨來源一致性比對日報與問卷的痛點描述，過濾單方面訊號、確認真實需求。<br><strong>成果</strong>：以回溯測試搭配 Precision@K 與 Lift 曲線驗證推薦成效，達 3 倍以上 Lift（推薦名單轉換率為隨機挑選的 3 倍），並依業務員產生個人化推薦名單</li>
       <li><strong>CRM 智慧查詢儀表板</strong>：開發 Streamlit 儀表板，使業務主管無需 SQL 即可查詢、多維度篩選與一鍵匯出 CRM 資料，並設定開機自動啟動。<br><strong>成果</strong>：秒級查詢回應，降低業務主管對資料團隊的臨時查詢依賴</li>
@@ -361,7 +361,7 @@
       <div class="exp-date">2022/07 ~ 2025/06</div>
     </div>
     <ul>
-      <li><strong>帳單分期預測模型</strong>：以 PyCaret 進行模型比較選出 CatBoost，並與 AutoKeras 建構的神經網路基準比較，於 6 個月外樣本資料驗證，用於優化簡訊行銷的觸及名單。<br><strong>成果</strong>：SMS 成本降低 88%，接觸客群從 17 萬縮減至 7 萬，仍涵蓋 90%+ 實際承做客戶</li>
+      <li><strong>帳單分期預測模型</strong>：以 PyCaret 進行模型比較選出 CatBoost，並與 AutoKeras 建構的神經網路基準比較，於 6 個月外樣本資料驗證，用於優化簡訊行銷的觸及名單。<br><strong>成果</strong>：SMS 成本降低近九成，接觸客群縮減逾五成，仍涵蓋九成以上實際承做客戶</li>
       <li><strong>因果推論分析</strong>：以 PS Matching、GRF、未配對邏輯迴歸（僅處理組）、未配對邏輯迴歸（處理組+混淆因子）交叉驗證，檢驗特約商店分期方案與高收益產品採用之間的因果關係，評估行銷企劃提出的預算增加方案。<br><strong>成果</strong>：發現兩者呈負相關，糾正行銷企劃原先的假設偏誤，提供預算編列決策依據</li>
       <li><strong>RFM 客戶分群</strong>：比較四分位法、K-means、DBSCAN 三種分群方式，追蹤循環戶 QoQ 分群移動狀況，為高收益產品線標記流失/待喚醒客群。<br><strong>成果</strong>：識別流失客群的移動模式，產出可執行的觸及名單</li>
       <li><strong>客戶消費分類標籤</strong>：以 BERT 語意相似度從小量標記資料自動擴充初始標籤，並支援業務驅動的重新分類與多標籤輸出。<br><strong>成果</strong>：突破規則式分類的侷限，讓行銷得以依消費行為精準鎖定客群</li>
@@ -380,9 +380,9 @@
       <div class="exp-date">2021/07 ~ 2022/06</div>
     </div>
     <ul>
-      <li><strong>職缺推薦系統</strong>：以 jieba 精準斷詞與 TF-IDF + cosine similarity 建立 content-based 推薦引擎，調整標題與描述的權重比例以捕捉技能相似（而非僅標題相似）的職缺，並納入瀏覽/應徵等求職者行為訊號提升相關性；為擴展至 300 萬筆以上職缺規模，改以 AWS LSHForest 取代 TF-IDF。<br><strong>成果</strong>：提升推薦精準度，並讓系統具備處理全量職缺資料集的能力</li>
+      <li><strong>職缺推薦系統</strong>：以 jieba 精準斷詞與 TF-IDF + cosine similarity 建立 content-based 推薦引擎，調整標題與描述的權重比例以捕捉技能相似（而非僅標題相似）的職缺，並納入瀏覽/應徵等求職者行為訊號提升相關性；為擴展至百萬筆以上職缺規模，改以 AWS LSHForest 取代 TF-IDF。<br><strong>成果</strong>：提升推薦精準度，並讓系統具備處理全量職缺資料集的能力</li>
       <li><strong>社群文章曝光排序公式</strong>：參考 Hacker News / StackOverflow 的排序邏輯，設計符合公司社群特性的曝光排序公式。<br><strong>成果</strong>：提升新文章的曝光機會，改善內容多樣性</li>
-      <li><strong>職缺特徵分析</strong>（PCA、K-means）：從 600 多筆職缺中萃取雇主需求與職缺特徵的關鍵因子。<br><strong>成果</strong>：提供配對平台欄位設計建議</li>
+      <li><strong>職缺特徵分析</strong>（PCA、K-means）：從數百筆職缺中萃取雇主需求與職缺特徵的關鍵因子。<br><strong>成果</strong>：提供配對平台欄位設計建議</li>
       <li><strong>職缺名稱分類</strong>：以停用詞/同義詞/自訂詞典斷詞後計算 TF-IDF，並以 SSE 最佳化分群數 K。<br><strong>成果</strong>：產出最受歡迎產業/職缺的分群文字雲，用於趨勢分析</li>
     </ul>
     <div class="exp-tags">
